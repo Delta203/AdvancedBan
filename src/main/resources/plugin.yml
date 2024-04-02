@@ -1,0 +1,16 @@
+name: AdvancedBan
+version: 1.3
+author: Delta203
+
+main: de.ab.delta203.bungee.AdvancedBan
+
+# Permissions:
+# - ab.tempmute
+# - ab.mute
+# - ab.unmute
+# - ab.tempban
+# - ab.ban
+# - ab.unban
+# - ab.cantbereported
+# - ab.check
+# - ab.panel

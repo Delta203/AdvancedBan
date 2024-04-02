@@ -1,0 +1,36 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord
+
+blacklist:
+  #domains:
+  - '.at'
+  - '.biz'
+  - '.cc'
+  - '.ch'
+  - '.co.at'
+  - '.co.uk'
+  - '.com'
+  - '.de'
+  - '.eu'
+  - '.gs'
+  - '.info'
+  - '.li'
+  - '.me'
+  - '.me.uk'
+  - '.mobi'
+  - '.name'
+  - '.net'
+  - '.nl'
+  - '.or.at'
+  - '.org'
+  - '.org.uk'
+  - '.tv'
+  #insults:
+  - 'fuck'
+  - 'ass'
+  - 'idiot'
+  - 'shit'
+  - 'whore'
+  - 'nigga'
+  - 'cunt'

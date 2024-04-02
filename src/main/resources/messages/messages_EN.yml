@@ -1,0 +1,14 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord
+
+prefix: '§f[§4ABan§f] §3'
+loaded:
+  plugin: '§aPlugin successfully loaded.'
+  files: 'Config files successfully loaded.'
+  query: 'Command query has started.'
+mysql:
+  connected: 'MySQl connection successful established.'
+  tables: 'MySQl tables successfully created.'
+
+help: false

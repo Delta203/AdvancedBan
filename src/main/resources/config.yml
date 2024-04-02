@@ -1,0 +1,28 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord
+
+# Languages supported:
+#   EN    | English
+#   DE    | German
+language: 'EN'
+
+# MySQl connection
+mysql:
+  host: 'localhost'
+  port: 3306
+  database: 'test'
+  user: 'root'
+  password: ''
+
+# Inform other team members about bans, mutes and reports
+notify:
+  mute: true
+  ban: true
+  report: true
+
+# Command query fetch every x seconds
+# Has to be enabled for the web interface.
+query:
+  enabled: true
+  delay: 10
