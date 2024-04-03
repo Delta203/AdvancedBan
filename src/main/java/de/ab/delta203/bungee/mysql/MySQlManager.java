@@ -92,8 +92,8 @@ public class MySQlManager {
           .executeUpdate();
       connection
           .prepareStatement(
-              "CREATE TABLE IF NOT EXISTS AB_PlayerHistory (PlayerUUID VARCHAR(100), FromUUID VARCHAR(100), "
-                  + "Date VARCHAR(100), Time VARCHAR(100), Type VARCHAR(100), Duration VARCHAR(100), Reason LONGTEXT)")
+              "CREATE TABLE IF NOT EXISTS AB_PlayerHistory (CurrentMillis BIGINT, PlayerUUID VARCHAR(100), "
+                  + "FromUUID VARCHAR(100), Type VARCHAR(100), Duration VARCHAR(100), Reason LONGTEXT)")
           .executeUpdate();
       connection
           .prepareStatement(
@@ -107,13 +107,13 @@ public class MySQlManager {
           .executeUpdate();
       connection
           .prepareStatement(
-              "CREATE TABLE IF NOT EXISTS AB_Reports (PlayerUUID VARCHAR(100), FromUUID VARCHAR(100), "
-                  + "Date VARCHAR(100), Time VARCHAR(100), Server VARCHAR(100), Reason LONGTEXT)")
+              "CREATE TABLE IF NOT EXISTS AB_Reports (CurrentMillis BIGINT, PlayerUUID VARCHAR(100), "
+                  + "FromUUID VARCHAR(100), Server VARCHAR(100), Reason LONGTEXT)")
           .executeUpdate();
       connection
           .prepareStatement(
-              "CREATE TABLE IF NOT EXISTS AB_Chat (PlayerUUID VARCHAR(100), Date VARCHAR(100), "
-                  + "Time VARCHAR(100), Server VARCHAR(100), Message LONGTEXT)")
+              "CREATE TABLE IF NOT EXISTS AB_Chat (CurrentMillis BIGINT, PlayerUUID VARCHAR(100), "
+                  + "Server VARCHAR(100), Message LONGTEXT)")
           .executeUpdate();
       connection
           .prepareStatement(

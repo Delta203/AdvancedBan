@@ -11,4 +11,40 @@ mysql:
   connected: 'MySQl connection successful established.'
   tables: 'MySQl tables successfully created.'
 
-help: false
+# Universal
+# Placeholders:
+#   %player%    | Player name
+no_permission: '§cYou do not have permission to execute this command!'
+not_online: '§cThe player §e%player% §cis not online.'
+
+# Report
+# Placeholders:
+#   %player%    | Player name
+#   %reason%    | Reason
+#   %reports%   | Amount of open reports
+report:
+  help: '§cUsage: /report <name>'
+  notification: '§7There are §e%reports% §7open reports! §3/abpanel'
+  reasons:
+    - 'Hacking'
+    - 'Chat'
+    - 'Bugusing'
+    - 'Teaming'
+    - 'Building'
+    - 'Trolling'
+    - 'Skin'
+    - 'Name'
+  not_yourself: '§cYou can not report yourself!'
+  cant_be_reported: '§cYou can not report §e%player%§c.'
+  already_reported: '§cYou have already reported §e%player%§c.'
+  invalid_reason: '§cThis reason does not exist!'
+  reporting:
+    title: 'Report the player §e%player%'
+    reason: '§8[§b%reason%§8] '
+    hover: '§3Click to report §e%player%'
+  confirm:
+    info: '§bYou want to report §e%player%§b for %reason%§b. Please confirm your report and note that incorrect reports will have consequences.'
+    confirm: '§8[§a§lConfirm§8]'
+    hover: '§aConfirm reporting §e%player%'
+  cant_be_confirmed: '§cYou can not confirm this report!'
+  confirmed: '§aYou have successfully reported §e%player%§a. Thank you for your support!'

@@ -1,6 +1,11 @@
 package de.ab.delta203.bungee;
 
 import de.ab.delta203.bungee.files.FileManager;
+import de.ab.delta203.bungee.listeners.Disconnect;
+import de.ab.delta203.bungee.listeners.Login;
+import de.ab.delta203.bungee.listeners.Switch;
+import de.ab.delta203.bungee.modules.chatlog.ChatLog;
+import de.ab.delta203.bungee.modules.report.Report;
 import de.ab.delta203.bungee.mysql.MySQlManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,7 +28,20 @@ public class AdvancedBan extends Plugin {
     plugin = this;
     initConfigs();
     initMySQl();
-    initCommandQuery();
+    registerCommandQuery();
+
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(this, new Disconnect(mysql.connection));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(this, new Login(mysql.connection));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerListener(this, new Switch(mysql.connection));
+
+    new ChatLog(this, mysql.connection).registerModule();
+    new Report(this, mysql.connection).registerModule();
 
     ProxyServer.getInstance()
         .getConsole()
@@ -66,8 +84,7 @@ public class AdvancedBan extends Plugin {
     mysql.createTable();
   }
 
-  private void initCommandQuery() {
-    if (!config.getBoolean("query.enabled")) return;
+  private void registerCommandQuery() {
     ProxyServer.getInstance()
         .getConsole()
         .sendMessage(

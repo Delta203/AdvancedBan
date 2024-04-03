@@ -22,7 +22,16 @@ notify:
   report: true
 
 # Command query fetch every x seconds
-# Has to be enabled for the web interface.
-query:
-  enabled: true
-  delay: 10
+query: 10
+
+# Chat log
+# Placeholders:
+#   %player%    | Player name
+#   %command%   | Command
+chatlog:
+  connect: '<b>%player% joined the game</b>'
+  disconnect: '<b>%player% left the game</b>'
+  command: '<i>%command%</i>'
+  # Report reason has to be registered
+  autoreport:
+    reason: 'Chat'
