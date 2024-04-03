@@ -2,7 +2,7 @@
 # Plugin by Delta203
 # v1.3 BungeeCord
 
-prefix: '§f[§4ABan§f] §3'
+prefix: '§f[§cABan§f] §3'
 loaded:
   plugin: '§aPlugin successfully loaded.'
   files: 'Config files successfully loaded.'
@@ -16,6 +16,43 @@ mysql:
 #   %player%    | Player name
 no_permission: '§cYou do not have permission to execute this command!'
 not_online: '§cThe player §e%player% §cis not online.'
+not_registered: '§cThe player §e%player% §cis not registered.'
+help:
+  title: 'Ban and mute system information'
+  tempmute: '§b/tempmute <name> §7Mute a player temporarily'
+  mute: '§b/mute <name> §7Mute a player'
+  unmute: '§b/unmute <name> §7Unmute a player'
+  tempban: '§b/tempban <name> §7Ban a player temporarily'
+  ban: '§b/ban <name> §7Ban a player'
+  unban: '§b/unban <name> §7Unban a player'
+  check: '§b/check <name> §7Check a player'
+  panel: '§b/abpanel §7Open the link to the web panel'
+
+# Time units
+# Placeholders
+#   %sec%    | Seconds
+#   %min%    | Minutes
+#   %hour%    | Hours
+#   %day%    | Days
+unit:
+  seconds:
+    name: 'Second(s)'
+    alias: 'sec'
+  minutes:
+    name: 'Minute(s)'
+    alias: 'min'
+  hours:
+    name: 'Hour(s)'
+    alias: 'hour'
+  days:
+    name: 'Day(s)'
+    alias: 'day'
+  permanent:
+    name: '§4PERMANENT'
+  to_big: '§cThe unit value is to big!'
+  not_a_number: '§cThe unit value is not a number.'
+  invalid_value: '§cThe unit value is invalid.'
+  invalid_unit: '§cThe unit must be %sec%, %min%, %hour%, %day%!'
 
 # Report
 # Placeholders:
@@ -24,7 +61,7 @@ not_online: '§cThe player §e%player% §cis not online.'
 #   %reports%   | Amount of open reports
 report:
   help: '§cUsage: /report <name>'
-  notification: '§7There are §e%reports% §7open reports! §3/abpanel'
+  notification: '§cThere are §e%reports% §copen reports!'
   reasons:
     - 'Hacking'
     - 'Chat'
@@ -43,8 +80,55 @@ report:
     reason: '§8[§b%reason%§8] '
     hover: '§3Click to report §e%player%'
   confirm:
-    info: '§bYou want to report §e%player%§b for %reason%§b. Please confirm your report and note that incorrect reports will have consequences.'
+    info: 'You want to report §e%player%§3 for %reason%. Please confirm your report and note that incorrect reports will have consequences. '
     confirm: '§8[§a§lConfirm§8]'
     hover: '§aConfirm reporting §e%player%'
   cant_be_confirmed: '§cYou can not confirm this report!'
   confirmed: '§aYou have successfully reported §e%player%§a. Thank you for your support!'
+  
+# Temp/-Mute
+# Placeholders
+#   %player%    | Player name
+#   %playerDN%  | Player display name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%  | Reason
+mute:
+  help:
+    tempmute: '§cUsage: /tempmute <name> <duration> <unit> <reason>'
+    mute: '§cUsage: /mute <name> <reason>'
+    unmute: '§cUsage: /unmute <name>'
+  notification: 'The player §e%playerDN% §3was muted by §b%fromDN%§3. Duration: §6%duration%'
+  message: '§cYou have been banned from the chat. Reason§7: §6%reason%§cDuration§7: §6%duration%'
+  not_yourself: '§cYou can not mute yourself!'
+  already_muted: '§cThe player §e%player% §cis already muted.'
+  not_muted: '§cThe player §e%player% §cis not muted.'
+  success:
+    mute: '§aYou have successfully muted the player §e%player%§a!'
+    unmute: '§aYou have successfully unmuted the player §e%player%§a!'
+    
+# Temp/-Ban
+# Placeholders
+#   %player%    | Player name
+#   %playerDN%  | Player display name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%  | Reason
+ban:
+  help:
+    tempban: '§cUsage: /tempban <name> <duration> <unit> <reason>'
+    ban: '§cUsage: /ban <name> <reason>'
+    unmute: '§cUsage: /unmute <name>'
+  notification: 'The player §e%playerDN% §3was banned by §b%fromDN%§3. Duration: §6%duration%'
+  message:
+    kick: '§cYou have been banned.$n§cReason§7: §6%reason%'
+    login: '§cYou have been banned.$n$n§cReason§7: §6%reason%$n§cDuration§7: §6%duration%'
+    ipban: '§cYou have been banned.$n$n§cReason§7: §6Banned with other account$n§cDuration§7: §4PERMANENT'
+  not_yourself: '§cYou can not mute yourself!'
+  already_muted: '§cThe player §e%player% §cis already muted.'
+  not_muted: '§cThe player §e%player% §cis not muted.'
+  success:
+    mute: '§aYou have successfully muted the player §e%player%§a!'
+    unmute: '§aYou have successfully unmuted the player §e%player%§a!'

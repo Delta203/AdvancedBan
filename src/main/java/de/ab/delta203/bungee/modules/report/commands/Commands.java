@@ -38,7 +38,7 @@ public class Commands extends Command implements TabExecutor {
           return;
         }
         ProxiedPlayer target = (ProxiedPlayer) confirmations.get(sender)[0];
-        String fromUUID = "console";
+        String fromUUID = AdvancedBan.config.getString("console");
         String reason = (String) confirmations.get(sender)[1];
         if (sender instanceof ProxiedPlayer p) {
           fromUUID = p.getUniqueId().toString();
@@ -108,14 +108,13 @@ public class Commands extends Command implements TabExecutor {
         return;
       }
       // valid
-      sender.sendMessage(
+      TextComponent confirm =
           new TextComponent(
               AdvancedBan.prefix
                   + AdvancedBan.messages
                       .getString("report.confirm.info")
                       .replace("%player%", target.getName())
-                      .replace("%reason%", reason)));
-      TextComponent confirm = new TextComponent();
+                      .replace("%reason%", reason));
       TextComponent tc =
           new TextComponent(AdvancedBan.messages.getString("report.confirm.confirm"));
       tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/report $confirm"));
@@ -159,7 +158,7 @@ public class Commands extends Command implements TabExecutor {
                       .replace("%player%", target.getName())));
       return false;
     }
-    String senderUUID = "console";
+    String senderUUID = AdvancedBan.config.getString("console");
     if (sender instanceof ProxiedPlayer p) {
       senderUUID = p.getUniqueId().toString();
     }

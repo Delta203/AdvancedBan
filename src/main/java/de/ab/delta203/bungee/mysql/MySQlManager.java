@@ -98,12 +98,12 @@ public class MySQlManager {
       connection
           .prepareStatement(
               "CREATE TABLE IF NOT EXISTS AB_Bans (PlayerUUID VARCHAR(100), PlayerIp VARCHAR(100), "
-                  + "FromUUID VARCHAR(100), End INT(16), Reason LONGTEXT)")
+                  + "FromUUID VARCHAR(100), End BIGINT, Reason LONGTEXT)")
           .executeUpdate();
       connection
           .prepareStatement(
               "CREATE TABLE IF NOT EXISTS AB_Mutes (PlayerUUID VARCHAR(100), FromUUID VARCHAR(100), "
-                  + "End INT(16), Reason LONGTEXT)")
+                  + "End BIGINT, Reason LONGTEXT)")
           .executeUpdate();
       connection
           .prepareStatement(

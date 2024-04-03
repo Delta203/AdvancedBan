@@ -2,12 +2,11 @@ package de.ab.delta203.bungee.modules.chatlog.listeners;
 
 import de.ab.delta203.bungee.AdvancedBan;
 import de.ab.delta203.bungee.modules.chatlog.mysql.LogHandler;
+import java.sql.Connection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
-
-import java.sql.Connection;
 
 public class Chat extends LogHandler implements Listener {
 
@@ -23,8 +22,7 @@ public class Chat extends LogHandler implements Listener {
         message = AdvancedBan.config.getString("chatlog.command").replace("%command%", message);
         record(p, message);
       } else {
-        // TODO: if player is not muted
-        record(p, message);
+        if (!isMuted(p.getUniqueId().toString())) record(p, message);
       }
     }
   }

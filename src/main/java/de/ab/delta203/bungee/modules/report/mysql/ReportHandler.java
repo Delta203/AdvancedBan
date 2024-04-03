@@ -15,6 +15,20 @@ public class ReportHandler {
     this.connection = connection;
   }
 
+  public boolean alreadyReported(ProxiedPlayer p, String from) {
+    String uuid = p.getUniqueId().toString();
+    try {
+      PreparedStatement ps =
+              connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports WHERE FromUUID = ?");
+      ps.setString(1, from);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) return rs.getString("PlayerUUID").equals(uuid);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public void report(ProxiedPlayer p, String from, String reason) {
     long millis = System.currentTimeMillis();
     String uuid = p.getUniqueId().toString();
@@ -32,20 +46,6 @@ public class ReportHandler {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
-
-  public boolean alreadyReported(ProxiedPlayer p, String from) {
-    String uuid = p.getUniqueId().toString();
-    try {
-      PreparedStatement ps =
-          connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports WHERE FromUUID = ?");
-      ps.setString(1, from);
-      ResultSet rs = ps.executeQuery();
-      if (rs.next()) return rs.getString("PlayerUUID").equals(uuid);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
   public int getReports() {

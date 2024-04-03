@@ -24,6 +24,12 @@ notify:
 # Command query fetch every x seconds
 query: 10
 
+# Max temp ban/mute value
+max: 730
+
+# Console
+console: 'Console'
+
 # Chat log
 # Placeholders:
 #   %player%    | Player name
@@ -34,4 +40,5 @@ chatlog:
   command: '<i>%command%</i>'
   # Report reason has to be registered
   autoreport:
+    enabled: true
     reason: 'Chat'
