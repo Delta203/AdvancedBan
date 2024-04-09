@@ -1,8 +1,9 @@
-package de.ab.delta203.bungee.modules.mute.commands;
+package de.ab.delta203.bungee.modules.ban.commands;
 
 import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
 import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import java.util.ArrayList;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,22 +11,20 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
-import java.util.ArrayList;
+public class TempBanCommand extends Command implements TabExecutor {
 
-public class TempMuteCommand extends Command implements TabExecutor {
-
-  private final MuteHandler muteHandler;
+  private final BanHandler banHandler;
   private final PlayerInfoHandler playerInfoHandler;
 
-  public TempMuteCommand(String name) {
+  public TempBanCommand(String name) {
     super(name);
-    muteHandler = new MuteHandler(AdvancedBan.mysql.connection);
+    banHandler = new BanHandler(AdvancedBan.mysql.connection);
     playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (!sender.hasPermission("ab.tempmute")) {
+    if (!sender.hasPermission("ab.tempban")) {
       sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
       return;
     }
@@ -42,15 +41,15 @@ public class TempMuteCommand extends Command implements TabExecutor {
       /*if (sender.getName().equals(name)) {
         sender.sendMessage(
             new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
+                AdvancedBan.prefix + AdvancedBan.messages.getString("ban.not_yourself")));
         return;
       }*/
-      if (muteHandler.isMuted(uuid)) {
+      if (banHandler.isBanned(uuid)) {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
                     + AdvancedBan.messages
-                        .getString("mute.already_muted")
+                        .getString("ban.already_banned")
                         .replace("%player%", name)));
         return;
       }
@@ -112,20 +111,28 @@ public class TempMuteCommand extends Command implements TabExecutor {
         senderDName = p.getDisplayName();
       }
       long end = System.currentTimeMillis() + value;
-      muteHandler.mute(uuid, senderUUID, end, reason.toString());
+      String ip = "-";
+      ProxiedPlayer target = ProxyServer.getInstance().getPlayer(name);
+      if (target != null) {
+        ip = target.getSocketAddress().toString();
+        target.disconnect(
+            new TextComponent(
+                AdvancedBan.messages.getString("ban.message.kick").replace("%reason%", reason)));
+      }
+      banHandler.ban(uuid, ip, senderUUID, end, reason.toString());
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("mute.success.mute").replace("%player%", name)));
+                  + AdvancedBan.messages.getString("ban.success.ban").replace("%player%", name)));
       // broadcast
-      if (AdvancedBan.config.getBoolean("notify.mute")) {
-        for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-          if (all.hasPermission("ab.tempmute") || all.hasPermission("ab.mute")) {
+      for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+        if (all.hasPermission("ab.tempban") || all.hasPermission("ab.ban")) {
+          if (AdvancedBan.config.getBoolean("notify.ban")) {
             all.sendMessage(
                 new TextComponent(
                     AdvancedBan.prefix
                         + AdvancedBan.messages
-                            .getString("mute.notification")
+                            .getString("ban.notification")
                             .replace("%player%", name)
                             .replace("%from%", sender.getName())
                             .replace("%fromDN%", senderDName)
@@ -136,7 +143,7 @@ public class TempMuteCommand extends Command implements TabExecutor {
     } else {
       sender.sendMessage(
           new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("mute.help.tempmute")));
+              AdvancedBan.prefix + AdvancedBan.messages.getString("ban.help.tempban")));
     }
   }
 

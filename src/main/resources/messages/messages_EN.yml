@@ -89,7 +89,6 @@ report:
 # Temp/-Mute
 # Placeholders
 #   %player%    | Player name
-#   %playerDN%  | Player display name
 #   %from%      | From player name
 #   %fromDN%    | From player display name
 #   %duration%  | Duration
@@ -99,7 +98,7 @@ mute:
     tempmute: '§cUsage: /tempmute <name> <duration> <unit> <reason>'
     mute: '§cUsage: /mute <name> <reason>'
     unmute: '§cUsage: /unmute <name>'
-  notification: 'The player §e%playerDN% §3was muted by §b%fromDN%§3. Duration: §6%duration%'
+  notification: 'The player §e%player% §3was muted by §b%fromDN%§3. Duration: §6%duration%'
   message: '§cYou have been banned from the chat. Reason§7: §6%reason%§cDuration§7: §6%duration%'
   not_yourself: '§cYou can not mute yourself!'
   already_muted: '§cThe player §e%player% §cis already muted.'
@@ -111,7 +110,6 @@ mute:
 # Temp/-Ban
 # Placeholders
 #   %player%    | Player name
-#   %playerDN%  | Player display name
 #   %from%      | From player name
 #   %fromDN%    | From player display name
 #   %duration%  | Duration
@@ -120,15 +118,15 @@ ban:
   help:
     tempban: '§cUsage: /tempban <name> <duration> <unit> <reason>'
     ban: '§cUsage: /ban <name> <reason>'
-    unmute: '§cUsage: /unmute <name>'
-  notification: 'The player §e%playerDN% §3was banned by §b%fromDN%§3. Duration: §6%duration%'
+    unban: '§cUsage: /unban <name>'
+  notification: 'The player §e%player% §3was banned by §b%fromDN%§3. Duration: §6%duration%'
   message:
-    kick: '§cYou have been banned.$n§cReason§7: §6%reason%'
-    login: '§cYou have been banned.$n$n§cReason§7: §6%reason%$n§cDuration§7: §6%duration%'
-    ipban: '§cYou have been banned.$n$n§cReason§7: §6Banned with other account$n§cDuration§7: §4PERMANENT'
-  not_yourself: '§cYou can not mute yourself!'
-  already_muted: '§cThe player §e%player% §cis already muted.'
-  not_muted: '§cThe player §e%player% §cis not muted.'
+    kick: '§cYou have been banned.\n§cReason§7: §6%reason%'
+    login: '§cYou have been banned.\n\n§cReason§7: §6%reason%\n§cDuration§7: §6%duration%'
+    ipban: '§cYou have been banned.\n\n§cReason§7: §6Banned with other account\n§cDuration§7: §4PERMANENT'
+  not_yourself: '§cYou can not ban yourself!'
+  already_banned: '§cThe player §e%player% §cis already banned.'
+  not_banned: '§cThe player §e%player% §cis not banned.'
   success:
-    mute: '§aYou have successfully muted the player §e%player%§a!'
-    unmute: '§aYou have successfully unmuted the player §e%player%§a!'
+    ban: '§aYou have successfully banned the player §e%player%§a!'
+    unban: '§aYou have successfully unbanned the player §e%player%§a!'

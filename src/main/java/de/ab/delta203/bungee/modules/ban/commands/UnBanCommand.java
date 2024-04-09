@@ -1,26 +1,26 @@
-package de.ab.delta203.bungee.modules.mute.commands;
+package de.ab.delta203.bungee.modules.ban.commands;
 
 import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
 import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
 
-public class UnMuteCommand extends Command {
+public class UnBanCommand extends Command {
 
-  private final MuteHandler muteHandler;
+  private final BanHandler banHandler;
   private final PlayerInfoHandler playerInfoHandler;
 
-  public UnMuteCommand(String name) {
+  public UnBanCommand(String name) {
     super(name);
-    muteHandler = new MuteHandler(AdvancedBan.mysql.connection);
+    banHandler = new BanHandler(AdvancedBan.mysql.connection);
     playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);
   }
 
   @Override
   public void execute(CommandSender sender, String[] args) {
-    if (!sender.hasPermission("ab.unmute")) {
+    if (!sender.hasPermission("ab.unban")) {
       sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
       return;
     }
@@ -34,25 +34,22 @@ public class UnMuteCommand extends Command {
                     + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
         return;
       }
-      if (!muteHandler.isMuted(uuid)) {
+      if (!banHandler.isBanned(uuid)) {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("mute.not_muted").replace("%player%", name)));
+                    + AdvancedBan.messages.getString("ban.not_banned").replace("%player%", name)));
         return;
       }
       // valid
-      muteHandler.unmute(uuid);
+      banHandler.unban(uuid);
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("mute.success.unmute")
-                      .replace("%player%", name)));
+                  + AdvancedBan.messages.getString("ban.success.unban").replace("%player%", name)));
     } else {
       sender.sendMessage(
-          new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("mute.help.unmute")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("ban.help.unban")));
     }
   }
 }

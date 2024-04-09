@@ -5,6 +5,7 @@ import de.ab.delta203.bungee.files.FileManager;
 import de.ab.delta203.bungee.listeners.Disconnect;
 import de.ab.delta203.bungee.listeners.Login;
 import de.ab.delta203.bungee.listeners.Switch;
+import de.ab.delta203.bungee.modules.ban.Ban;
 import de.ab.delta203.bungee.modules.chatlog.ChatLog;
 import de.ab.delta203.bungee.modules.mute.Mute;
 import de.ab.delta203.bungee.modules.report.Report;
@@ -43,6 +44,7 @@ public class AdvancedBan extends Plugin {
         .registerListener(this, new Switch(mysql.connection));
     ProxyServer.getInstance().getPluginManager().registerCommand(this, new Commands("advancedban"));
 
+    new Ban(this, mysql.connection).registerModule();
     new ChatLog(this, mysql.connection).registerModule();
     new Mute(this, mysql.connection).registerModule();
     new Report(this, mysql.connection).registerModule();

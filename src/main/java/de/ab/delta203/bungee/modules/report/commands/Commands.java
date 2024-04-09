@@ -52,10 +52,10 @@ public class Commands extends Command implements TabExecutor {
         reportHandler.report(target, fromUUID, reason);
         confirmations.remove(sender);
         // broadcast
-        int reports = reportHandler.getReports();
-        for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-          if (all.hasPermission("ab.panel")) {
-            if (AdvancedBan.config.getBoolean("notify.report")) {
+        if (AdvancedBan.config.getBoolean("notify.report")) {
+          int reports = reportHandler.getReports();
+          for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+            if (all.hasPermission("ab.panel")) {
               all.sendMessage(
                   new TextComponent(
                       AdvancedBan.prefix
