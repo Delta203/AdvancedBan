@@ -146,12 +146,14 @@ public class Commands extends Command implements TabExecutor {
                   + AdvancedBan.messages.getString("not_online").replace("%player%", targetName)));
       return false;
     }
-    /*if (target == sender) {
-      sender.sendMessage(
-          new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("report.not_yourself")));
-      return false;
-    }*/
+    if (!AdvancedBan.config.getBoolean("self")) {
+      if (target == sender) {
+        sender.sendMessage(
+            new TextComponent(
+                AdvancedBan.prefix + AdvancedBan.messages.getString("report.not_yourself")));
+        return false;
+      }
+    }
     if (target.hasPermission("ab.cantbereported")) {
       sender.sendMessage(
           new TextComponent(
