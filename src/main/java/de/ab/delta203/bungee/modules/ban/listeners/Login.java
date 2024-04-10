@@ -1,6 +1,8 @@
 package de.ab.delta203.bungee.modules.ban.listeners;
 
+import de.ab.delta203.bungee.AdvancedBan;
 import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -16,6 +18,32 @@ public class Login extends BanHandler implements Listener {
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onLogin(LoginEvent e) {
-    // TODO: Event
+    String uuid = e.getConnection().getUniqueId().toString();
+    String ip = e.getConnection().getSocketAddress().toString().split(":")[0];
+    if (isBanned(uuid)) {
+      long current = System.currentTimeMillis();
+      long end = getEnd(uuid);
+      if (end == -1 || current < end) {
+        String reason = getReason(uuid);
+        String duration = getDuration(uuid);
+        e.setCancelled(true);
+        e.setReason(
+            new TextComponent(
+                AdvancedBan.messages
+                    .getString("ban.message.login")
+                    .replace("%reason%", reason)
+                    .replace("%duration%", duration)
+                    .replace("\\n", "\n")));
+        return;
+      }
+      unban(uuid);
+      log(uuid, "-", "unban", "-", "-");
+    }
+    if (isBannedIp(ip)) {
+      e.setCancelled(true);
+      e.setReason(
+          new TextComponent(
+              AdvancedBan.messages.getString("ban.message.ipban").replace("\\n", "\n")));
+    }
   }
 }

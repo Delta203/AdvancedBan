@@ -121,4 +121,22 @@ public class MuteHandler {
       e.printStackTrace();
     }
   }
+
+  public void log(String uuid, String from, String type, String duration, String reason) {
+    long current = System.currentTimeMillis();
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement(
+              "INSERT INTO AB_PlayerHistory (CurrentMillis, PlayerUUID, FromUUID, Type, Duration, Reason) VALUES (?,?,?,?,?,?)");
+      ps.setLong(1, current);
+      ps.setString(2, uuid);
+      ps.setString(3, from);
+      ps.setString(4, type);
+      ps.setString(5, duration);
+      ps.setString(6, reason);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }

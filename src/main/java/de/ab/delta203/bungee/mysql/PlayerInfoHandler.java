@@ -28,11 +28,15 @@ public class PlayerInfoHandler {
     try {
       PreparedStatement ps =
           connection.prepareStatement(
-              "INSERT INTO AB_PlayerInfo (PlayerUUID, PlayerName, Server, LoginKey) VALUES (?,?,?,?)");
+              "INSERT INTO AB_PlayerInfo (PlayerUUID, PlayerName, Server, LoginKey, Notify_Ban, "
+                  + "Notify_Mute, Notify_Report) VALUES (?,?,?,?,?,?,?)");
       ps.setString(1, uuid);
       ps.setString(2, name);
       ps.setString(3, "-");
       ps.setString(4, "-");
+      ps.setBoolean(5, true);
+      ps.setBoolean(6, true);
+      ps.setBoolean(7, true);
       ps.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -179,5 +183,50 @@ public class PlayerInfoHandler {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public void updateNotify(ProxiedPlayer p, Notification notification, boolean notify) {
+    String uuid = p.getUniqueId().toString();
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement(
+              "UPDATE AB_PlayerInfo SET " + notification.getValue() + " = ? WHERE PlayerUUID = ?");
+      ps.setBoolean(1, notify);
+      ps.setString(2, uuid);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public boolean hasNotify(ProxiedPlayer p, Notification notification) {
+    String uuid = p.getUniqueId().toString();
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement(
+              "SELECT " + notification.getValue() + " FROM AB_PlayerInfo WHERE PlayerUUID = ?");
+      ps.setString(1, uuid);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) return rs.getBoolean(notification.getValue());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public enum Notification {
+    BAN("Notify_Ban"),
+    MUTE("Notify_Mute"),
+    REPORT("Notify_Report");
+
+    private final String value;
+
+    Notification(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
   }
 }

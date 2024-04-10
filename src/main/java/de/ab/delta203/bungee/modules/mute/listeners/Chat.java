@@ -32,10 +32,12 @@ public class Chat extends MuteHandler implements Listener {
                   AdvancedBan.messages
                       .getString("mute.message")
                       .replace("%reason%", getReason(uuid))
-                      .replace("%duration%", getDuration(uuid))));
+                      .replace("%duration%", getDuration(uuid))
+                      .replace("\\n", "\n")));
           return;
         }
         unmute(uuid);
+        log(uuid, "-", "unmute", "-", "-");
       }
     }
   }

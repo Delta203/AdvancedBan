@@ -15,20 +15,18 @@ mysql:
   user: 'root'
   password: ''
 
-# Inform other team members about bans, mutes and reports
-notify:
-  mute: true
-  ban: true
-  report: true
-
-# Command query fetch every x seconds
-query: 10
+# Console name
+console: 'Console'
 
 # Max temp ban/mute value
 max: 730
 
-# Console
-console: 'Console'
+# Self interactions (Ban, Mute, Report)
+# Debug purpose (Default: false)
+self: false
+
+# Command query fetch every x seconds
+query: 10
 
 # Chat log
 # Placeholders:

@@ -36,19 +36,21 @@ public class MuteCommand extends Command {
                     + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
         return;
       }
-      /*if (sender.getName().equals(name)) {
-        sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
-        return;
-      }*/
+      if (!AdvancedBan.config.getBoolean("self")) {
+        if (sender.getName().equals(name)) {
+          sender.sendMessage(
+              new TextComponent(
+                  AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
+          return;
+        }
+      }
       if (muteHandler.isMuted(uuid)) {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
                     + AdvancedBan.messages
                         .getString("mute.already_muted")
-                        .replace("%player%", uuid)));
+                        .replace("%player%", name)));
         return;
       }
       // valid
@@ -63,14 +65,20 @@ public class MuteCommand extends Command {
         senderDName = p.getDisplayName();
       }
       muteHandler.mute(uuid, senderUUID, -1, reason.toString());
+      muteHandler.log(
+          uuid,
+          senderUUID,
+          "mute",
+          AdvancedBan.messages.getString("unit.permanent.name"),
+          reason.toString());
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
                   + AdvancedBan.messages.getString("mute.success.mute").replace("%player%", name)));
       // broadcast
-      if (AdvancedBan.config.getBoolean("notify.mute")) {
-        for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-          if (all.hasPermission("ab.tempmute") || all.hasPermission("ab.mute")) {
+      for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+        if (all.hasPermission("ab.mute") || all.hasPermission("ab.tempmute")) {
+          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.MUTE)) {
             all.sendMessage(
                 new TextComponent(
                     AdvancedBan.prefix
@@ -79,9 +87,10 @@ public class MuteCommand extends Command {
                             .replace("%player%", name)
                             .replace("%from%", sender.getName())
                             .replace("%fromDN%", senderDName)
+                            .replace("%reason%", reason)
                             .replace(
-                                "%duration%",
-                                AdvancedBan.messages.getString("unit.permanent.name"))));
+                                "%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
+                            .replace("\\n", "\n")));
           }
         }
       }

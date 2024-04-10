@@ -39,12 +39,14 @@ public class TempMuteCommand extends Command implements TabExecutor {
                     + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
         return;
       }
-      /*if (sender.getName().equals(name)) {
-        sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
-        return;
-      }*/
+      if (!AdvancedBan.config.getBoolean("self")) {
+        if (sender.getName().equals(name)) {
+          sender.sendMessage(
+              new TextComponent(
+                  AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
+          return;
+        }
+      }
       if (muteHandler.isMuted(uuid)) {
         sender.sendMessage(
             new TextComponent(
@@ -113,14 +115,15 @@ public class TempMuteCommand extends Command implements TabExecutor {
       }
       long end = System.currentTimeMillis() + value;
       muteHandler.mute(uuid, senderUUID, end, reason.toString());
+      muteHandler.log(uuid, senderUUID, "tempmute", args[1] + " " + unitName, reason.toString());
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
                   + AdvancedBan.messages.getString("mute.success.mute").replace("%player%", name)));
       // broadcast
-      if (AdvancedBan.config.getBoolean("notify.mute")) {
-        for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-          if (all.hasPermission("ab.tempmute") || all.hasPermission("ab.mute")) {
+      for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+        if (all.hasPermission("ab.mute") || all.hasPermission("ab.tempmute")) {
+          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.MUTE)) {
             all.sendMessage(
                 new TextComponent(
                     AdvancedBan.prefix
@@ -129,7 +132,9 @@ public class TempMuteCommand extends Command implements TabExecutor {
                             .replace("%player%", name)
                             .replace("%from%", sender.getName())
                             .replace("%fromDN%", senderDName)
-                            .replace("%duration%", args[1] + " " + unitName)));
+                            .replace("%reason%", reason)
+                            .replace("%duration%", args[1] + " " + unitName)
+                            .replace("\\n", "\n")));
           }
         }
       }

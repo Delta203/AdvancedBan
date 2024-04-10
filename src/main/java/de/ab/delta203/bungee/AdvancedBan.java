@@ -1,12 +1,16 @@
 package de.ab.delta203.bungee;
 
-import de.ab.delta203.bungee.commands.Commands;
+import de.ab.delta203.bungee.commands.MainCommand;
+import de.ab.delta203.bungee.commands.ToggleBanCommand;
+import de.ab.delta203.bungee.commands.ToggleMuteCommand;
+import de.ab.delta203.bungee.commands.ToggleReportCommand;
 import de.ab.delta203.bungee.files.FileManager;
 import de.ab.delta203.bungee.listeners.Disconnect;
 import de.ab.delta203.bungee.listeners.Login;
 import de.ab.delta203.bungee.listeners.Switch;
 import de.ab.delta203.bungee.modules.ban.Ban;
 import de.ab.delta203.bungee.modules.chatlog.ChatLog;
+import de.ab.delta203.bungee.modules.check.Check;
 import de.ab.delta203.bungee.modules.mute.Mute;
 import de.ab.delta203.bungee.modules.report.Report;
 import de.ab.delta203.bungee.mysql.MySQlManager;
@@ -42,10 +46,22 @@ public class AdvancedBan extends Plugin {
     ProxyServer.getInstance()
         .getPluginManager()
         .registerListener(this, new Switch(mysql.connection));
-    ProxyServer.getInstance().getPluginManager().registerCommand(this, new Commands("advancedban"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(this, new MainCommand("advancedban"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(this, new ToggleBanCommand("togglebannotify"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(this, new ToggleMuteCommand("togglemutenotify"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(this, new ToggleReportCommand("togglereportnotify"));
 
     new Ban(this, mysql.connection).registerModule();
     new ChatLog(this, mysql.connection).registerModule();
+    new Check(this).registerModule();
     new Mute(this, mysql.connection).registerModule();
     new Report(this, mysql.connection).registerModule();
 

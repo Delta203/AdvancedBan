@@ -18,6 +18,5 @@ public class Switch extends PlayerInfoHandler implements Listener {
   public void onSwitch(ServerSwitchEvent e) {
     ProxiedPlayer p = e.getPlayer();
     updateServer(p);
-    // TODO: Report notification
   }
 }

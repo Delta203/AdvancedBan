@@ -5,6 +5,7 @@ import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
 import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class UnMuteCommand extends Command {
@@ -42,7 +43,12 @@ public class UnMuteCommand extends Command {
         return;
       }
       // valid
+      String senderUUID = AdvancedBan.config.getString("console");
+      if (sender instanceof ProxiedPlayer p) {
+        senderUUID = p.getUniqueId().toString();
+      }
       muteHandler.unmute(uuid);
+      muteHandler.log(uuid, senderUUID, "unmute", "-", "-");
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix

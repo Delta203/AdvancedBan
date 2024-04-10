@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.ab.delta203.bungee.modules.report.mysql.ReportHandler;
+import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -18,11 +19,13 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 public class Commands extends Command implements TabExecutor {
 
   private final ReportHandler reportHandler;
+  private final PlayerInfoHandler playerInfoHandler;
   private final HashMap<CommandSender, Object[]> confirmations;
 
   public Commands(String name) {
     super(name);
     reportHandler = new ReportHandler(AdvancedBan.mysql.connection);
+    playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);
     confirmations = new HashMap<>();
   }
 
@@ -52,10 +55,10 @@ public class Commands extends Command implements TabExecutor {
         reportHandler.report(target, fromUUID, reason);
         confirmations.remove(sender);
         // broadcast
-        if (AdvancedBan.config.getBoolean("notify.report")) {
-          int reports = reportHandler.getReports();
-          for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-            if (all.hasPermission("ab.panel")) {
+        int reports = reportHandler.getReports();
+        for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+          if (all.hasPermission("ab.panel")) {
+            if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.REPORT)) {
               all.sendMessage(
                   new TextComponent(
                       AdvancedBan.prefix
@@ -176,7 +179,16 @@ public class Commands extends Command implements TabExecutor {
 
   @Override
   public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-    if (args.length == 2) {
+    if (args.length <= 1) {
+      if (!(sender instanceof ProxiedPlayer p)) return new ArrayList<>();
+      ArrayList<String> locals = new ArrayList<>();
+      for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+        if (all.getServer().getInfo().getName().equals(p.getServer().getInfo().getName())) {
+          locals.add(all.getName());
+        }
+      }
+      return locals;
+    } else if (args.length == 2) {
       return new ArrayList<>(AdvancedBan.messages.getStringList("report.reasons"));
     }
     return new ArrayList<>();

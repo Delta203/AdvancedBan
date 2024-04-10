@@ -38,12 +38,14 @@ public class TempBanCommand extends Command implements TabExecutor {
                     + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
         return;
       }
-      /*if (sender.getName().equals(name)) {
-        sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("ban.not_yourself")));
-        return;
-      }*/
+      if (!AdvancedBan.config.getBoolean("self")) {
+        if (sender.getName().equals(name)) {
+          sender.sendMessage(
+              new TextComponent(
+                  AdvancedBan.prefix + AdvancedBan.messages.getString("ban.not_yourself")));
+          return;
+        }
+      }
       if (banHandler.isBanned(uuid)) {
         sender.sendMessage(
             new TextComponent(
@@ -114,20 +116,24 @@ public class TempBanCommand extends Command implements TabExecutor {
       String ip = "-";
       ProxiedPlayer target = ProxyServer.getInstance().getPlayer(name);
       if (target != null) {
-        ip = target.getSocketAddress().toString();
+        ip = target.getSocketAddress().toString().split(":")[0];
         target.disconnect(
             new TextComponent(
-                AdvancedBan.messages.getString("ban.message.kick").replace("%reason%", reason)));
+                AdvancedBan.messages
+                    .getString("ban.message.kick")
+                    .replace("%reason%", reason)
+                    .replace("\\n", "\n")));
       }
       banHandler.ban(uuid, ip, senderUUID, end, reason.toString());
+      banHandler.log(uuid, senderUUID, "tempban", args[1] + " " + unitName, reason.toString());
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
                   + AdvancedBan.messages.getString("ban.success.ban").replace("%player%", name)));
       // broadcast
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-        if (all.hasPermission("ab.tempban") || all.hasPermission("ab.ban")) {
-          if (AdvancedBan.config.getBoolean("notify.ban")) {
+        if (all.hasPermission("ab.ban") || all.hasPermission("ab.tempban")) {
+          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.BAN)) {
             all.sendMessage(
                 new TextComponent(
                     AdvancedBan.prefix
@@ -136,7 +142,9 @@ public class TempBanCommand extends Command implements TabExecutor {
                             .replace("%player%", name)
                             .replace("%from%", sender.getName())
                             .replace("%fromDN%", senderDName)
-                            .replace("%duration%", args[1] + " " + unitName)));
+                            .replace("%reason%", reason)
+                            .replace("%duration%", args[1] + " " + unitName)
+                            .replace("\\n", "\n")));
           }
         }
       }

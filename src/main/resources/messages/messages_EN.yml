@@ -19,20 +19,36 @@ not_online: '§cThe player §e%player% §cis not online.'
 not_registered: '§cThe player §e%player% §cis not registered.'
 help:
   title: 'Ban and mute system information'
-  tempmute: '§b/tempmute <name> §7Mute a player temporarily'
-  mute: '§b/mute <name> §7Mute a player'
-  unmute: '§b/unmute <name> §7Unmute a player'
-  tempban: '§b/tempban <name> §7Ban a player temporarily'
+  notify:
+    ban: '§b/togglebannotify §7Toggle ban notifications'
+    mute: '§b/togglemutenotify §7Toggle mute notifications'
+    report: '§b/togglereportnotify §7Toggle report notifications'
   ban: '§b/ban <name> §7Ban a player'
+  tempban: '§b/tempban <name> §7Ban a player temporarily'
   unban: '§b/unban <name> §7Unban a player'
+  mute: '§b/mute <name> §7Mute a player'
+  tempmute: '§b/tempmute <name> §7Mute a player temporarily'
+  unmute: '§b/unmute <name> §7Unmute a player'
   check: '§b/check <name> §7Check a player'
   panel: '§b/abpanel §7Open the link to the web panel'
+
+# Toggle notification
+toggle:
+  ban:
+    enabled: '§aYou have enabled ban notifications.'
+    disabled: '§cYou have disabled ban notifications!'
+  mute:
+    enabled: '§aYou have enabled mute notifications.'
+    disabled: '§cYou have disabled mute notifications!'
+  report:
+    enabled: '§aYou have enabled report notifications.'
+    disabled: '§cYou have disabled report notifications!'
 
 # Time units
 # Placeholders
 #   %sec%    | Seconds
 #   %min%    | Minutes
-#   %hour%    | Hours
+#   %hour%   | Hours
 #   %day%    | Days
 unit:
   seconds:
@@ -61,7 +77,7 @@ unit:
 #   %reports%   | Amount of open reports
 report:
   help: '§cUsage: /report <name>'
-  notification: '§cThere are §e%reports% §copen reports!'
+  notification: '§4There are currently §c%reports% §4open reports!'
   reasons:
     - 'Hacking'
     - 'Chat'
@@ -92,20 +108,20 @@ report:
 #   %from%      | From player name
 #   %fromDN%    | From player display name
 #   %duration%  | Duration
-#   %reason%  | Reason
+#   %reason%    | Reason
 mute:
   help:
     tempmute: '§cUsage: /tempmute <name> <duration> <unit> <reason>'
     mute: '§cUsage: /mute <name> <reason>'
     unmute: '§cUsage: /unmute <name>'
-  notification: 'The player §e%player% §3was muted by §b%fromDN%§3. Duration: §6%duration%'
-  message: '§cYou have been banned from the chat. Reason§7: §6%reason%§cDuration§7: §6%duration%'
+  notification: 'The player §b%player% §3was muted by §c%fromDN%§3!\n§f[§cABan§f] §3Reason: %reason%§7| §3Duration: §6%duration%'
+  message: '§cYou have been banned from the chat.\n§cReason§7: §6%reason%§cDuration§7: §6%duration%'
   not_yourself: '§cYou can not mute yourself!'
   already_muted: '§cThe player §e%player% §cis already muted.'
   not_muted: '§cThe player §e%player% §cis not muted.'
   success:
-    mute: '§aYou have successfully muted the player §e%player%§a!'
-    unmute: '§aYou have successfully unmuted the player §e%player%§a!'
+    mute: '§aYou have successfully muted §e%player%§a!'
+    unmute: '§aYou have successfully unmuted §e%player%§a!'
     
 # Temp/-Ban
 # Placeholders
@@ -113,13 +129,13 @@ mute:
 #   %from%      | From player name
 #   %fromDN%    | From player display name
 #   %duration%  | Duration
-#   %reason%  | Reason
+#   %reason%    | Reason
 ban:
   help:
     tempban: '§cUsage: /tempban <name> <duration> <unit> <reason>'
     ban: '§cUsage: /ban <name> <reason>'
     unban: '§cUsage: /unban <name>'
-  notification: 'The player §e%player% §3was banned by §b%fromDN%§3. Duration: §6%duration%'
+  notification: 'The player §b%player% §3was banned by §c%fromDN%§3!\n§f[§cABan§f] §3Reason: %reason%§7| §3Duration: §6%duration%'
   message:
     kick: '§cYou have been banned.\n§cReason§7: §6%reason%'
     login: '§cYou have been banned.\n\n§cReason§7: §6%reason%\n§cDuration§7: §6%duration%'
@@ -128,5 +144,25 @@ ban:
   already_banned: '§cThe player §e%player% §cis already banned.'
   not_banned: '§cThe player §e%player% §cis not banned.'
   success:
-    ban: '§aYou have successfully banned the player §e%player%§a!'
-    unban: '§aYou have successfully unbanned the player §e%player%§a!'
+    ban: '§aYou have successfully banned §e%player%§a!'
+    unban: '§aYou have successfully unbanned §e%player%§a!'
+
+# Check
+# Placeholders
+#   %player%    | Player name
+#   %uuid%      | Player uuid
+#   %ip%        | Player ip address
+#   %server%    | Server
+#   %banned%    | Is banned
+#   %muted%     | Is muted
+check:
+  help: '§cUsage: /check <name>'
+  prefix:
+    true: '§c'
+    false: '§a'
+  title: 'Player data about §e%player%'
+  uuid: 'UUID: §b%uuid%'
+  ip: 'Socket Address: §b%ip%'
+  server: 'Server: §b%server%'
+  banned: 'Banned: %banned%'
+  muted: 'Muted: %muted%'
