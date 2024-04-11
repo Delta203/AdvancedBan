@@ -17,12 +17,16 @@ public class Chat extends LogHandler implements Listener {
   @EventHandler
   public void onChat(ChatEvent e) {
     if (e.getSender() instanceof ProxiedPlayer p) {
-      String message = e.getMessage().replace("<", "&#60;").replace(">", "&#62");
+      String message = e.getMessage();
       if (message.startsWith("/")) {
+        message = message.replace("<", "&#60;").replace(">", "&#62");
         message = AdvancedBan.config.getString("chatlog.command").replace("%command%", message);
         record(p, message);
       } else {
-        if (!isMuted(p.getUniqueId().toString())) record(p, message);
+        if (!isMuted(p.getUniqueId().toString())) {
+          message = message.replace("<", "&#60;").replace(">", "&#62");
+          record(p, message);
+        }
       }
     }
   }

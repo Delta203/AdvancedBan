@@ -14,6 +14,19 @@ public class LogHandler {
     this.connection = connection;
   }
 
+  public boolean isMuted(String uuid) {
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement("SELECT FromUUID FROM AB_Mutes WHERE PlayerUUID = ?");
+      ps.setString(1, uuid);
+      ResultSet rs = ps.executeQuery();
+      return rs.next();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   public void record(ProxiedPlayer p, String message) {
     long millis = System.currentTimeMillis();
     String uuid = p.getUniqueId().toString();
@@ -31,18 +44,5 @@ public class LogHandler {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
-
-  public boolean isMuted(String uuid) {
-    try {
-      PreparedStatement ps =
-          connection.prepareStatement("SELECT FromUUID FROM AB_Mutes WHERE PlayerUUID = ?");
-      ps.setString(1, uuid);
-      ResultSet rs = ps.executeQuery();
-      return rs.next();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 }

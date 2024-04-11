@@ -23,9 +23,9 @@ public class Switch extends ReportHandler implements Listener {
   public void onSwitch(ServerSwitchEvent e) {
     ProxiedPlayer p = e.getPlayer();
     if (p.hasPermission("ab.panel")) {
-      int reports = getReports();
-      if (reports > 0) {
-        if (playerInfoHandler.hasNotify(p, PlayerInfoHandler.Notification.REPORT)) {
+      if (playerInfoHandler.hasNotify(p, PlayerInfoHandler.Notification.REPORT)) {
+        int reports = getReports();
+        if (reports > 0) {
           p.sendMessage(
               new TextComponent(
                   AdvancedBan.prefix

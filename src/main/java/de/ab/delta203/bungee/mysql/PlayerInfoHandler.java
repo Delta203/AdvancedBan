@@ -122,6 +122,17 @@ public class PlayerInfoHandler {
     }
   }
 
+  public void resetServers() {
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement("UPDATE AB_PlayerInfo SET Server = ? WHERE 1");
+      ps.setString(1, "-");
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public String getLoginKey(String uuid) {
     try {
       PreparedStatement ps =
@@ -166,6 +177,17 @@ public class PlayerInfoHandler {
     }
   }
 
+  public void resetLoginKeys() {
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement("UPDATE AB_PlayerInfo SET LoginKey = ? WHERE 1");
+      ps.setString(1, "-");
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   private String md5(String s) {
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
@@ -185,20 +207,6 @@ public class PlayerInfoHandler {
     return null;
   }
 
-  public void updateNotify(ProxiedPlayer p, Notification notification, boolean notify) {
-    String uuid = p.getUniqueId().toString();
-    try {
-      PreparedStatement ps =
-          connection.prepareStatement(
-              "UPDATE AB_PlayerInfo SET " + notification.getValue() + " = ? WHERE PlayerUUID = ?");
-      ps.setBoolean(1, notify);
-      ps.setString(2, uuid);
-      ps.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
   public boolean hasNotify(ProxiedPlayer p, Notification notification) {
     String uuid = p.getUniqueId().toString();
     try {
@@ -212,6 +220,20 @@ public class PlayerInfoHandler {
       e.printStackTrace();
     }
     return false;
+  }
+
+  public void updateNotify(ProxiedPlayer p, Notification notification, boolean notify) {
+    String uuid = p.getUniqueId().toString();
+    try {
+      PreparedStatement ps =
+          connection.prepareStatement(
+              "UPDATE AB_PlayerInfo SET " + notification.getValue() + " = ? WHERE PlayerUUID = ?");
+      ps.setBoolean(1, notify);
+      ps.setString(2, uuid);
+      ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public enum Notification {

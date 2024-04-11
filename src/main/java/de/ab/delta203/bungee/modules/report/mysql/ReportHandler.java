@@ -19,7 +19,7 @@ public class ReportHandler {
     String uuid = p.getUniqueId().toString();
     try {
       PreparedStatement ps =
-              connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports WHERE FromUUID = ?");
+          connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports WHERE FromUUID = ?");
       ps.setString(1, from);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) return rs.getString("PlayerUUID").equals(uuid);
@@ -27,6 +27,20 @@ public class ReportHandler {
       e.printStackTrace();
     }
     return false;
+  }
+
+  public int getReports() {
+    int result = 0;
+    try {
+      PreparedStatement ps = connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports");
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        result++;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
 
   public void report(ProxiedPlayer p, String from, String reason) {
@@ -46,19 +60,5 @@ public class ReportHandler {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
-
-  public int getReports() {
-    int result = 0;
-    try {
-      PreparedStatement ps = connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports");
-      ResultSet rs = ps.executeQuery();
-      while (rs.next()) {
-        result++;
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return result;
   }
 }

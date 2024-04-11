@@ -16,13 +16,13 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
-public class Commands extends Command implements TabExecutor {
+public class ReportCommand extends Command implements TabExecutor {
 
   private final ReportHandler reportHandler;
   private final PlayerInfoHandler playerInfoHandler;
   private final HashMap<CommandSender, Object[]> confirmations;
 
-  public Commands(String name) {
+  public ReportCommand(String name) {
     super(name);
     reportHandler = new ReportHandler(AdvancedBan.mysql.connection);
     playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);

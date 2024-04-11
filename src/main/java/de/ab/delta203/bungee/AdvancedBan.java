@@ -14,6 +14,7 @@ import de.ab.delta203.bungee.modules.check.Check;
 import de.ab.delta203.bungee.modules.mute.Mute;
 import de.ab.delta203.bungee.modules.report.Report;
 import de.ab.delta203.bungee.mysql.MySQlManager;
+import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -70,6 +71,13 @@ public class AdvancedBan extends Plugin {
         .sendMessage(
             new TextComponent(
                 AdvancedBan.prefix + AdvancedBan.messages.getString("loaded.plugin")));
+  }
+
+  @Override
+  public void onDisable() {
+    PlayerInfoHandler playerInfoHandler = new PlayerInfoHandler(mysql.connection);
+    playerInfoHandler.resetServers();
+    playerInfoHandler.resetLoginKeys();
   }
 
   private void initConfigs() {

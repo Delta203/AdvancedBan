@@ -1,6 +1,6 @@
 package de.ab.delta203.bungee.modules.report;
 
-import de.ab.delta203.bungee.modules.report.commands.Commands;
+import de.ab.delta203.bungee.modules.report.commands.ReportCommand;
 import de.ab.delta203.bungee.modules.report.listeners.Chat;
 import de.ab.delta203.bungee.modules.report.listeners.Switch;
 import java.sql.Connection;
@@ -15,7 +15,9 @@ public record Report(Plugin plugin, Connection connection) {
   }
 
   private void initCommands() {
-    ProxyServer.getInstance().getPluginManager().registerCommand(plugin, new Commands("report"));
+    ProxyServer.getInstance()
+        .getPluginManager()
+        .registerCommand(plugin, new ReportCommand("report"));
   }
 
   public void registerModule() {
