@@ -40,3 +40,8 @@ chatlog:
   autoreport:
     enabled: true
     reason: 'Chat'
+
+# Advanced Ban panel
+# Placeholders:
+#   %key%       | Login key
+link: 'http://localhost/abpanel/?key=%key%'

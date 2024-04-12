@@ -1,9 +1,6 @@
 package de.ab.delta203.bungee;
 
-import de.ab.delta203.bungee.commands.MainCommand;
-import de.ab.delta203.bungee.commands.ToggleBanCommand;
-import de.ab.delta203.bungee.commands.ToggleMuteCommand;
-import de.ab.delta203.bungee.commands.ToggleReportCommand;
+import de.ab.delta203.bungee.commands.*;
 import de.ab.delta203.bungee.files.FileManager;
 import de.ab.delta203.bungee.listeners.Disconnect;
 import de.ab.delta203.bungee.listeners.Login;
@@ -12,6 +9,7 @@ import de.ab.delta203.bungee.modules.ban.Ban;
 import de.ab.delta203.bungee.modules.chatlog.ChatLog;
 import de.ab.delta203.bungee.modules.check.Check;
 import de.ab.delta203.bungee.modules.mute.Mute;
+import de.ab.delta203.bungee.modules.query.Query;
 import de.ab.delta203.bungee.modules.report.Report;
 import de.ab.delta203.bungee.mysql.MySQlManager;
 import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
@@ -36,7 +34,6 @@ public class AdvancedBan extends Plugin {
     plugin = this;
     initConfigs();
     initMySQl();
-    registerCommandQuery();
 
     ProxyServer.getInstance()
         .getPluginManager()
@@ -52,6 +49,9 @@ public class AdvancedBan extends Plugin {
         .registerCommand(this, new MainCommand("advancedban"));
     ProxyServer.getInstance()
         .getPluginManager()
+        .registerCommand(this, new ABPanelCommand("abpanel"));
+    ProxyServer.getInstance()
+        .getPluginManager()
         .registerCommand(this, new ToggleBanCommand("togglebannotify"));
     ProxyServer.getInstance()
         .getPluginManager()
@@ -64,6 +64,7 @@ public class AdvancedBan extends Plugin {
     new ChatLog(this, mysql.connection).registerModule();
     new Check(this).registerModule();
     new Mute(this, mysql.connection).registerModule();
+    new Query(mysql.connection).registerModule();
     new Report(this, mysql.connection).registerModule();
 
     ProxyServer.getInstance()
@@ -112,12 +113,5 @@ public class AdvancedBan extends Plugin {
     mysql = new MySQlManager(url, port, database, user, password);
     mysql.connect();
     mysql.createTable();
-  }
-
-  private void registerCommandQuery() {
-    ProxyServer.getInstance()
-        .getConsole()
-        .sendMessage(
-            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("loaded.query")));
   }
 }

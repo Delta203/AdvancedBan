@@ -31,6 +31,9 @@ help:
   unmute: '§b/unmute <name> §7Einen Spieler entstummen'
   check: '§b/check <name> §7Einen Spieler überprüfen'
   panel: '§b/abpanel §7Den Link zum Webpanel öffnen'
+abpanel:
+  title: 'Klicke §8[§ahier§8] §3um das Web Panel zu öffnen.'
+  hover: '§aÖffne das Web Panel'
 
 # Toggle notification
 toggle:
@@ -75,9 +78,15 @@ unit:
 #   %player%    | Player name
 #   %reason%    | Reason
 #   %reports%   | Amount of open reports
+#   %server%    | Server
 report:
-  help: '§cVerwendung: /report <name>'
-  notification: '§4Es gibt derzeit §c%reports% §4offene Reports!'
+  help: '§cUsage: /report <name>'
+  notification:
+    open: '§4Es gibt derzeit §c%reports% §4offene Reports!'
+    new:
+      title: '§cDer Spieler §6%player% §cwurde gemeldet!\n§f[§cABan§f] §cGrund: %reason% §7| §cServer: '
+      server: '§8[§a%server%§8]'
+      hover: '§aMit dem Server verbinden'
   reasons:
     - 'Hacking'
     - 'Chat'

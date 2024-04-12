@@ -30,7 +30,7 @@ public class Switch extends ReportHandler implements Listener {
               new TextComponent(
                   AdvancedBan.prefix
                       + AdvancedBan.messages
-                          .getString("report.notification")
+                          .getString("report.notification.open")
                           .replace("%reports%", String.valueOf(reports))));
         }
       }

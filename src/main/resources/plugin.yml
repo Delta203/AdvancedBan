@@ -5,12 +5,12 @@ author: Delta203
 main: de.ab.delta203.bungee.AdvancedBan
 
 # Permissions:
-# - ab.tempmute
-# - ab.mute
-# - ab.unmute
-# - ab.tempban
 # - ab.ban
+# - ab.tempban
 # - ab.unban
+# - ab.mute
+# - ab.tempmute
+# - ab.unmute
 # - ab.cantbereported
 # - ab.check
 # - ab.panel

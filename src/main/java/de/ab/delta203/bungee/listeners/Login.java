@@ -1,5 +1,7 @@
 package de.ab.delta203.bungee.listeners;
 
+import de.ab.delta203.bungee.AdvancedBan;
+import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
 import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import java.sql.Connection;
 import net.md_5.bungee.api.connection.PendingConnection;
@@ -9,13 +11,17 @@ import net.md_5.bungee.event.EventHandler;
 
 public class Login extends PlayerInfoHandler implements Listener {
 
+  private final BanHandler banHandler;
+
   public Login(Connection connection) {
     super(connection);
+    banHandler = new BanHandler(AdvancedBan.mysql.connection);
   }
 
   @EventHandler
   public void onLogin(LoginEvent e) {
     PendingConnection pc = e.getConnection();
+    if (banHandler.isBanned(pc.getUniqueId().toString())) return;
     if (!registered(pc)) {
       register(pc);
     }

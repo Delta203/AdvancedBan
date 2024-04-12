@@ -87,21 +87,21 @@ public class BanCommand extends Command {
               AdvancedBan.prefix
                   + AdvancedBan.messages.getString("ban.success.ban").replace("%player%", name)));
       // broadcast
+      TextComponent textComponent =
+          new TextComponent(
+              AdvancedBan.prefix
+                  + AdvancedBan.messages
+                      .getString("ban.notification")
+                      .replace("%player%", name)
+                      .replace("%from%", sender.getName())
+                      .replace("%fromDN%", senderDName)
+                      .replace("%reason%", reason)
+                      .replace("%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
+                      .replace("\\n", "\n"));
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.ban") || all.hasPermission("ab.tempban")) {
           if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.BAN)) {
-            all.sendMessage(
-                new TextComponent(
-                    AdvancedBan.prefix
-                        + AdvancedBan.messages
-                            .getString("ban.notification")
-                            .replace("%player%", name)
-                            .replace("%from%", sender.getName())
-                            .replace("%fromDN%", senderDName)
-                            .replace("%reason%", reason)
-                            .replace(
-                                "%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
-                            .replace("\\n", "\n")));
+            all.sendMessage(textComponent);
           }
         }
       }

@@ -76,21 +76,21 @@ public class MuteCommand extends Command {
               AdvancedBan.prefix
                   + AdvancedBan.messages.getString("mute.success.mute").replace("%player%", name)));
       // broadcast
+      TextComponent textComponent =
+          new TextComponent(
+              AdvancedBan.prefix
+                  + AdvancedBan.messages
+                      .getString("mute.notification")
+                      .replace("%player%", name)
+                      .replace("%from%", sender.getName())
+                      .replace("%fromDN%", senderDName)
+                      .replace("%reason%", reason)
+                      .replace("%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
+                      .replace("\\n", "\n"));
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.mute") || all.hasPermission("ab.tempmute")) {
           if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.MUTE)) {
-            all.sendMessage(
-                new TextComponent(
-                    AdvancedBan.prefix
-                        + AdvancedBan.messages
-                            .getString("mute.notification")
-                            .replace("%player%", name)
-                            .replace("%from%", sender.getName())
-                            .replace("%fromDN%", senderDName)
-                            .replace("%reason%", reason)
-                            .replace(
-                                "%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
-                            .replace("\\n", "\n")));
+            all.sendMessage(textComponent);
           }
         }
       }

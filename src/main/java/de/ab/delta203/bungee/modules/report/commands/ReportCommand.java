@@ -56,15 +56,39 @@ public class ReportCommand extends Command implements TabExecutor {
         confirmations.remove(sender);
         // broadcast
         int reports = reportHandler.getReports();
+        TextComponent textComponentContent =
+            new TextComponent(
+                AdvancedBan.prefix
+                    + AdvancedBan.messages
+                        .getString("report.notification.new.title")
+                        .replace("%player%", target.getName())
+                        .replace("%reason%", reason)
+                        .replace("\\n", "\n"));
+        TextComponent textComponentServer =
+            new TextComponent(
+                AdvancedBan.messages
+                    .getString("report.notification.new.server")
+                    .replace("%server%", target.getServer().getInfo().getName()));
+        textComponentServer.setHoverEvent(
+            new HoverEvent(
+                HoverEvent.Action.SHOW_TEXT,
+                new Text(AdvancedBan.messages.getString("report.notification.new.hover"))));
+        textComponentServer.setClickEvent(
+            new ClickEvent(
+                ClickEvent.Action.RUN_COMMAND,
+                "/server " + target.getServer().getInfo().getName()));
+        textComponentContent.addExtra(textComponentServer);
+        TextComponent textComponentReports =
+            new TextComponent(
+                AdvancedBan.prefix
+                    + AdvancedBan.messages
+                        .getString("report.notification.open")
+                        .replace("%reports%", String.valueOf(reports)));
         for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
           if (all.hasPermission("ab.panel")) {
             if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.REPORT)) {
-              all.sendMessage(
-                  new TextComponent(
-                      AdvancedBan.prefix
-                          + AdvancedBan.messages
-                              .getString("report.notification")
-                              .replace("%reports%", String.valueOf(reports))));
+              all.sendMessage(textComponentContent);
+              all.sendMessage(textComponentReports);
             }
           }
         }
