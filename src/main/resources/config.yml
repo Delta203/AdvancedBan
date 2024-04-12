@@ -43,5 +43,6 @@ chatlog:
 
 # Advanced Ban panel
 # Placeholders:
+#   %uuid%    | Player uuid
 #   %key%       | Login key
-link: 'http://localhost/abpanel/?key=%key%'
+link: 'http://localhost/abpanel/?uuid=%uuid%&key=%key%'

@@ -24,7 +24,11 @@ public class ABPanelCommand extends Command {
     if (sender instanceof ProxiedPlayer p) {
       if (p.hasPermission("ab.panel")) {
         String key = playerInfoHandler.getLoginKey(p.getUniqueId().toString());
-        String link = AdvancedBan.config.getString("link").replace("%key%", key);
+        String link =
+            AdvancedBan.config
+                .getString("link")
+                .replace("%uuid%", p.getUniqueId().toString())
+                .replace("%key%", key);
         TextComponent textComponent =
             new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("abpanel.title"));
         textComponent.setHoverEvent(
