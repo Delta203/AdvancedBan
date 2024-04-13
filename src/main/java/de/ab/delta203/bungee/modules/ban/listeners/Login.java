@@ -2,6 +2,7 @@ package de.ab.delta203.bungee.modules.ban.listeners;
 
 import de.ab.delta203.bungee.AdvancedBan;
 import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
+import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -12,8 +13,11 @@ import java.sql.Connection;
 
 public class Login extends BanHandler implements Listener {
 
+  private final PlayerInfoHandler playerInfoHandler;
+
   public Login(Connection connection) {
     super(connection);
+    playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
@@ -26,6 +30,7 @@ public class Login extends BanHandler implements Listener {
       if (end == -1 || current < end) {
         String reason = getReason(uuid);
         String duration = getDuration(uuid);
+        playerInfoHandler.removeLoginKey(uuid);
         e.setCancelled(true);
         e.setReason(
             new TextComponent(
@@ -40,6 +45,7 @@ public class Login extends BanHandler implements Listener {
       log(uuid, "-", "unban", "-", "-");
     }
     if (isBannedIp(ip)) {
+      playerInfoHandler.removeLoginKey(uuid);
       e.setCancelled(true);
       e.setReason(
           new TextComponent(

@@ -166,8 +166,7 @@ public class PlayerInfoHandler {
     }
   }
 
-  public void removeLoginKey(ProxiedPlayer p) {
-    String uuid = p.getUniqueId().toString();
+  public void removeLoginKey(String uuid) {
     try {
       PreparedStatement ps =
           connection.prepareStatement("UPDATE AB_PlayerInfo SET LoginKey = ? WHERE PlayerUUID = ?");

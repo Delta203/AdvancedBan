@@ -18,6 +18,6 @@ public class Disconnect extends PlayerInfoHandler implements Listener {
   public void onDisconnect(PlayerDisconnectEvent e) {
     ProxiedPlayer p = e.getPlayer();
     removeServer(p);
-    removeLoginKey(p);
+    removeLoginKey(p.getUniqueId().toString());
   }
 }
