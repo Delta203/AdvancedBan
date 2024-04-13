@@ -50,12 +50,13 @@ public class ReportHandler {
     try {
       PreparedStatement ps =
           connection.prepareStatement(
-              "INSERT INTO AB_Reports (CurrentMillis, PlayerUUID, FromUUID, Server, Reason) VALUES (?,?,?,?,?)");
+              "INSERT INTO AB_Reports (CurrentMillis, PlayerUUID, FromUUID, Server, Reason, InProgress) VALUES (?,?,?,?,?,?)");
       ps.setLong(1, millis);
       ps.setString(2, uuid);
       ps.setString(3, from);
       ps.setString(4, server);
       ps.setString(5, reason);
+      ps.setBoolean(6, false);
       ps.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();

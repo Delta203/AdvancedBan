@@ -109,7 +109,7 @@ public class MySQlManager {
       connection
           .prepareStatement(
               "CREATE TABLE IF NOT EXISTS AB_Reports (CurrentMillis BIGINT, PlayerUUID VARCHAR(100), "
-                  + "FromUUID VARCHAR(100), Server VARCHAR(100), Reason LONGTEXT)")
+                  + "FromUUID VARCHAR(100), Server VARCHAR(100), Reason LONGTEXT, InProgress BOOLEAN)")
           .executeUpdate();
       connection
           .prepareStatement(
