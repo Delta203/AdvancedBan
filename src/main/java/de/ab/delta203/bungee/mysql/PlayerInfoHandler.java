@@ -23,20 +23,22 @@ public class PlayerInfoHandler {
   }
 
   public void register(PendingConnection pc) {
+    long millis = System.currentTimeMillis();
     String uuid = pc.getUniqueId().toString();
     String name = pc.getName();
     try {
       PreparedStatement ps =
           connection.prepareStatement(
-              "INSERT INTO AB_PlayerInfo (PlayerUUID, PlayerName, Server, LoginKey, Notify_Ban, "
-                  + "Notify_Mute, Notify_Report) VALUES (?,?,?,?,?,?,?)");
-      ps.setString(1, uuid);
-      ps.setString(2, name);
-      ps.setString(3, "-");
+              "INSERT INTO AB_PlayerInfo (CurrentMillis, PlayerUUID, PlayerName, Server, LoginKey, Notify_Ban, "
+                  + "Notify_Mute, Notify_Report) VALUES (?,?,?,?,?,?,?,?)");
+      ps.setLong(1, millis);
+      ps.setString(2, uuid);
+      ps.setString(3, name);
       ps.setString(4, "-");
-      ps.setBoolean(5, true);
+      ps.setString(5, "-");
       ps.setBoolean(6, true);
       ps.setBoolean(7, true);
+      ps.setBoolean(8, true);
       ps.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();

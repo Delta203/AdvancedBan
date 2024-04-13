@@ -87,8 +87,8 @@ public class MySQlManager {
     try {
       connection
           .prepareStatement(
-              "CREATE TABLE IF NOT EXISTS AB_PlayerInfo (PlayerUUID VARCHAR(100), PlayerName VARCHAR(100), "
-                  + "Server VARCHAR(100), LoginKey VARCHAR(100), Notify_Ban BOOLEAN, "
+              "CREATE TABLE IF NOT EXISTS AB_PlayerInfo (CurrentMillis BIGINT, PlayerUUID VARCHAR(100), "
+                  + "PlayerName VARCHAR(100), Server VARCHAR(100), LoginKey VARCHAR(100), Notify_Ban BOOLEAN, "
                   + "Notify_Mute BOOLEAN, Notify_Report BOOLEAN)")
           .executeUpdate();
       connection
