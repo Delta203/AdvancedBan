@@ -1,19 +1,23 @@
-<div class="container mt-2">
+<?php
+  $reports = getReporsCount();
+?>
+
+<div class="container mt-3">
   <div class="row">
     <div class="col-md-8 text-center">
       <div class="bg-body-tertiary py-5 mb-5">
-        <image src="images/chest.png" width="200" height="200">
+        <image src="images/<?php if ($reports == 0) { echo("orchid.png"); } else { echo("chest.png"); }?>" width="200" height="200">
         <h1>Manage Reports</h1>
-        <p class="col-lg-8 mx-auto fs-5 text-muted">
-          There are currently 10 open reports.
+        <p class="mx-auto fs-5 text-muted">
+          There are currently <?php echo($reports); ?> open reports.
         </p>
-        <button class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill" type="button">
+        <button class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill" type="button" <?php if ($reports == 0) echo("disabled"); ?>>
           Open Report
         </button>
       </div>
       <div class="bg-body-tertiary py-5 p-5 mb-5">
         <h1>Check Player</h1>
-        <p class="col-lg-8 mx-auto fs-5 text-muted">
+        <p class="mx-auto fs-5 text-muted">
           Search for player UUID or name.
         </p>
         <form class="input-group mb-3" method="get">

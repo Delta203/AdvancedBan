@@ -10,4 +10,9 @@
   $mysql_database = "test";
   $mysql_username = "root";
   $mysql_password = "";
+
+  # Admin session
+  $admin_enabled = false;
+  $admin_uuid = "root";
+  $admin_key = "key";
 ?>

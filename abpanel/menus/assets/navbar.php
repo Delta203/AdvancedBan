@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <ul class="nav">
+  <ul class="nav nav-underline">
     <li class="nav-item">
       <a class="nav-link text-body-secondary" href="<?php echo($root); ?>">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
@@ -10,7 +10,7 @@
     </li>
     <?php if ($p != "index") { ?>
       <li class="nav-item">
-        <a class="nav-link disabled"><?php echo(ucfirst($p)); ?></a>
+        <a class="nav-link active"><?php echo(ucfirst($p)); ?></a>
       </li>
     <?php } ?>
   </ul>

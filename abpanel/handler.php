@@ -14,10 +14,6 @@ function isSessionValid() {
   return false;
 }
 
-function isRegistered($uuid) {
-  return getName($uuid) != null;
-}
-
 function getRegisterMillis($uuid) {
   global $connection;
   $sql = "SELECT CurrentMillis FROM AB_PlayerInfo WHERE PlayerUUID = '$uuid'";
@@ -64,6 +60,33 @@ function isMuted($uuid) {
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) return true;
   return false;
+}
+
+function getBansCount($uuid) {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' AND (Type = 'ban' OR Type = 'tempban')";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
+function getMutesCount($uuid) {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' AND (Type = 'mute' OR Type = 'tempmute')";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
+function getReporsCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Reports WHERE 1";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
 }
 
 function millisecondsToDate($millis) {
