@@ -1,8 +1,8 @@
 <?php
   require_once("config.php");
   require_once("punishments.php");
-  require_once("api/handler.php");
   require_once("messages/messages_". $language . ".php");
+  require_once("api/handler.php");
   $p = "index";
   if (isset($_GET["p"])) $p = htmlspecialchars($_GET["p"]);
   $connection = new mysqli($mysql_host, $mysql_username, $mysql_password, $mysql_database);
@@ -51,12 +51,14 @@
   </head>
 
   <body>
-    <?php if (file_exists("menus/" . $p . ".php") || $p == "reportHandler" || $p == "jumpHandler" || $p == "closeReportHandler") {
+    <?php if (file_exists("menus/" . $p . ".php") || $p == "getReport" || $p == "jump" || $p == "closeReport"
+        || $p == "punish" || $p == "logout" || $p == "unban" || $p == "unmute") {
       if (!$session_valid) {
         include("menus/error.php");
       } else {
         include("menus/assets/navbar.php");
-        if ($p == "reportHandler" || $p == "jumpHandler" || $p == "closeReportHandler") {
+        if ($p == "getReport" || $p == "jump" || $p == "closeReport"
+            || $p == "punish" || $p == "logout" || $p == "unban" || $p == "unmute") {
           include("api/" . $p . ".php");
         } else {
           include("menus/" . $p . ".php");

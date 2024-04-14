@@ -17,10 +17,10 @@
     <div class="col-md-8">
       <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
-          <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=jumpHandler&report=" . $uuid . "&server=" . $server); ?>">Jump To Server</a>
+          <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=jump&report=" . $uuid . "&server=" . $server); ?>">Jump To Server</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=closeReportHandler&uuid=" . $uuid); ?>">Close Report</a>
+          <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=closeReport&uuid=" . $uuid); ?>">Close Report</a>
         </li>
       </ul>
       <?php if(isset($_GET['jumped'])) { ?>
@@ -63,23 +63,26 @@
         <p class="fs-5 text-muted">
           Punish the player <b><?php echo($name); ?></b>!
         </p>
-        <form>
+        <form method="get">
+          <input type="hidden" name="p" value="punish" required>
+          <input type="hidden" name="uuid" value="<?php echo($uuid); ?>" required>
+          <input type="hidden" name="player" value="<?php echo($name); ?>" required>
           <div class="mb-3">
             <?php foreach(array_keys($punishments_ban) as $ban) { ?>
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio<?php echo($ban); ?>" autocomplete="off" required>
+              <input type="radio" class="btn-check" name="punishment" id="btnradio<?php echo($ban); ?>" value="<?php echo($ban); ?>" autocomplete="off" required>
               <label class="btn btn-outline-primary" for="btnradio<?php echo($ban); ?>"><?php echo($ban); ?></label>
             <?php } ?>
           </div>
           <div class="mb-3">
-            <?php foreach(array_keys($punishments_mute) as $ban) { ?>
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio<?php echo($ban); ?>" autocomplete="off" required>
-              <label class="btn btn-outline-primary" for="btnradio<?php echo($ban); ?>"><?php echo($ban); ?></label>
+            <?php foreach(array_keys($punishments_mute) as $mute) { ?>
+              <input type="radio" class="btn-check" name="punishment" id="btnradio<?php echo($mute); ?>" value="<?php echo($mute); ?>" autocomplete="off" required>
+              <label class="btn btn-outline-primary" for="btnradio<?php echo($mute); ?>"><?php echo($mute); ?></label>
             <?php } ?>
           </div>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-check mb-4">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" required>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="checked" id="flexRadioDefault" required>
                 <label class="form-check-label" for="flexRadioDefault">
                   Everything checked
                 </label>

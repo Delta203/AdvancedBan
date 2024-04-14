@@ -12,7 +12,7 @@
   $mysql_password = "";
 
   # Admin session
-  $admin_enabled = false;
-  $admin_uuid = "root";
+  $admin_enabled = true;
+  $admin_uuid = "Console";
   $admin_key = "key";
 ?>

@@ -1,20 +1,22 @@
 <?php
 function isSessionValid() {
-  global $connection;
+  global $connection, $admin_enabled, $admin_uuid, $admin_key;
   if (!isset($_SESSION["user"])) return false;
   if (!str_contains($_SESSION["user"], "|")) return false;
   $session = explode("|", $_SESSION["user"]);
   $uuid = $session[0];
   $key = $session[1];
   if ($key == "-") return false;
+  if ($admin_enabled) {
+    if ($uuid == $admin_uuid && $key == $admin_key) {
+      return true;
+    }
+  }
   $sql = "SELECT PlayerUUID FROM AB_PlayerInfo WHERE LoginKey = '$key'";
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) {
     if ($row["PlayerUUID"] == $uuid) return true;
   }
-  /*
-  Admin account verification
-  */
   return false;
 }
 
@@ -97,7 +99,7 @@ function getReportsCount($uuid) {
   return $count;
 }
 
-function getGlobalReporsCount() {
+function getGlobalReportsCount() {
   global $connection;
   $count = 0;
   $sql = "SELECT * FROM AB_Reports WHERE InProgress = '0'";
@@ -123,6 +125,24 @@ function getLatestReport($uuid) {
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) return $row;
   return null;
+}
+
+function getGlobalBansCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Bans";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
+function getGlobaMutesCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Mutes";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
 }
 
 ?>

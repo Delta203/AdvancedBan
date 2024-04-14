@@ -13,3 +13,6 @@
     </div>
   </div>
 </div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+  <a class="text-decoration-none" href="<?php echo($root); ?>/?p=logout">Logout</a>
+</div>

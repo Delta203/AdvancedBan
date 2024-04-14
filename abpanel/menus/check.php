@@ -8,11 +8,38 @@
     $uuid = getUUID($content);
   }
   $name = getName($uuid);
+  $isBanned = isBanned($uuid);
+  $isMuted = isMuted($uuid);
 ?>
 
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-8">
+      <?php if ($isBanned || $isMuted) echo("<ul class='nav nav-tabs justify-content-end'>") ?>
+        <?php if ($isBanned) { ?>
+          <li class="nav-item">
+            <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=unban&player=" . $name); ?>">Unban Player</a>
+          </li>
+        <?php } if ($isMuted) { ?>
+          <li class="nav-item">
+            <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=unmute&player=" . $name); ?>">Unmute Player</a>
+          </li>
+        <?php } ?>
+      <?php if ($isBanned || $isMuted) echo("</ul>") ?>
+      <?php if(isset($_GET['unbanned'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+          You have successfully unbanned <b><?php echo($name); ?></b>!<br>
+          Wait a few seconds for the unban to process.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <?php } ?>
+      <?php if(isset($_GET['unmuted'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+          You have successfully unmuted <b><?php echo($name); ?></b>!<br>
+          Wait a few seconds for the unmute to process.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <?php } ?>
       <div class="bg-body-tertiary py-5 p-5 mb-5">
         <div class="col d-flex align-items-start">
           <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
@@ -39,8 +66,8 @@
         </p>
         <p class="fs-5 text-muted">
           Server: <b><?php echo(getServer($uuid)); ?></b><br>
-          Banned: <?php if (isBanned($uuid)) { echo("<b class='text-danger'>true</b>"); } else { echo("<b class='text-success'>false</b>"); } ?><br>
-          Muted: <?php if (isMuted($uuid)) { echo("<b class='text-danger'>true</b>"); } else { echo("<b class='text-success'>false</b>"); } ?><br>
+          Banned: <?php if ($isBanned) { echo("<b class='text-danger'>true</b>"); } else { echo("<b class='text-success'>false</b>"); } ?><br>
+          Muted: <?php if ($isMuted) { echo("<b class='text-danger'>true</b>"); } else { echo("<b class='text-success'>false</b>"); } ?><br>
         </p>
       </div>
 

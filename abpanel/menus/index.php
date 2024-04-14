@@ -1,5 +1,5 @@
 <?php
-  $reports = getGlobalReporsCount();
+  $reports = getGlobalReportsCount();
 ?>
 
 <div class="container mt-3">
@@ -17,7 +17,7 @@
         <p class="mx-auto fs-5 text-muted">
           There are currently <?php echo($reports); ?> open reports.
         </p>
-        <a class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill <?php if ($reports == 0) echo("disabled"); ?>" href="?p=reportHandler">
+        <a class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill <?php if ($reports == 0) echo("disabled"); ?>" href="?p=getReport">
           Open Report
         </a>
       </div>
@@ -34,6 +34,19 @@
             Search
           </button>
         </form>
+      </div>
+
+      <div class="bg-body-tertiary py-5 p-5 mb-5">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="mx-auto fs-5 text-muted">Global Bans:</p>
+            <h1><a class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<?php echo($root); ?>/?p=banlist"><?php echo(getGlobalBansCount()); ?></a></h1>
+          </div>
+          <div class="col-md-6">
+            <p class="mx-auto fs-5 text-muted">Global Mutes:</p>
+            <h1><a class="link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<?php echo($root); ?>/?p=mutelist"><?php echo(getGlobaMutesCount()); ?></a></h1>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4">

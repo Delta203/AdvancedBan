@@ -12,7 +12,10 @@
 
   $punishments_mute["Spamming"] = "tempmute %player% 1 day Spamming";
   $punishments_mute["Advertising"] = "tempmute %player% 7 day Advertising";
+  $punishments_mute["Bad Word"] = "tempmute %player% 3 day Bad Word";
   $punishments_mute["Mild Insult"] = "tempmute %player% 3 day Mild Insult";
   $punishments_mute["Serious Insult"] = "tempmute %player% 30 day Serious Insult";
   $punishments_mute["Racism"] = "tempmute %player% 30 day Racism";
+
+  $punishment_all = array_merge($punishments_ban, $punishments_mute);
 ?>

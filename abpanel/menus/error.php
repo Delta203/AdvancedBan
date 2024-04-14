@@ -20,7 +20,7 @@
               <input type="text" name="uuid" class="form-control" placeholder="UUID" required>
             </div>
             <div class="input-group">
-              <input type="text" name="key" class="form-control" placeholder="Key" required>
+              <input type="password" name="key" class="form-control" placeholder="Key" required>
               <button class="btn btn-outline-secondary" type="submit">Login</button>
             </div>
           </form>
