@@ -145,6 +145,7 @@ public class TempBanCommand extends Command implements TabExecutor {
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.ban") || all.hasPermission("ab.tempban")) {
           if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.BAN)) {
+            if (all == target) continue;
             all.sendMessage(textComponent);
           }
         }
