@@ -29,11 +29,17 @@ public class AdvancedBan extends Plugin {
   public static Configuration messages;
   public static MySQlManager mysql;
 
+  private PlayerInfoHandler playerInfoHandler;
+
   @Override
   public void onEnable() {
     plugin = this;
     initConfigs();
     initMySQl();
+
+    playerInfoHandler = new PlayerInfoHandler(mysql.connection);
+    playerInfoHandler.resetServers();
+    playerInfoHandler.resetLoginKeys();
 
     ProxyServer.getInstance()
         .getPluginManager()
@@ -76,7 +82,6 @@ public class AdvancedBan extends Plugin {
 
   @Override
   public void onDisable() {
-    PlayerInfoHandler playerInfoHandler = new PlayerInfoHandler(mysql.connection);
     playerInfoHandler.resetServers();
     playerInfoHandler.resetLoginKeys();
   }
