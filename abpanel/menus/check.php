@@ -10,6 +10,10 @@
   $name = getName($uuid);
   $isBanned = isBanned($uuid);
   $isMuted = isMuted($uuid);
+
+  $page = 1;
+  if (isset($_GET["page"])) $page = htmlspecialchars($_GET["page"]);
+  $offset = ($page-1) * 10;
 ?>
 
 <div class="container mt-3">
@@ -89,7 +93,7 @@
           </thead>
           <tbody>
             <?php
-            $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' ORDER BY CurrentMillis DESC";
+            $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' ORDER BY CurrentMillis DESC LIMIT 10 OFFSET $offset";
             $result = $connection->query($sql);
             while ($row = $result->fetch_assoc()) { ?>
               <tr>
@@ -102,6 +106,16 @@
             <?php } ?>
           </tbody>
         </table>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <div class="btn-group me-2" role="group">
+            <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=check&player=<?php echo($name); ?>&page=1">1</a>
+            <?php
+              $pages = getHistoryCount($uuid) / 10;
+              for ($i = 2; $i <= $pages+1; $i++) { ?>
+                <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=check&player=<?php echo($name); ?>&page=<?php echo($i); ?>"><?php echo($i); ?></a>
+            <?php } ?>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4">

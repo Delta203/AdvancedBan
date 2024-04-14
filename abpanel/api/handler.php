@@ -145,4 +145,13 @@ function getGlobaMutesCount() {
   return $count;
 }
 
+function getHistoryCount($uuid) {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid'";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
 ?>
