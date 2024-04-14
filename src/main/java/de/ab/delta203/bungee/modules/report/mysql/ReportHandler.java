@@ -29,10 +29,12 @@ public class ReportHandler {
     return false;
   }
 
-  public int getReports() {
+  public int getOpenReports() {
     int result = 0;
     try {
-      PreparedStatement ps = connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports");
+      PreparedStatement ps =
+          connection.prepareStatement("SELECT PlayerUUID FROM AB_Reports WHERE InProgress = ?");
+      ps.setBoolean(1, false);
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
         result++;

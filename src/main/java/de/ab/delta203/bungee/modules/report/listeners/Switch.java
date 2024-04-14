@@ -24,7 +24,7 @@ public class Switch extends ReportHandler implements Listener {
     ProxiedPlayer p = e.getPlayer();
     if (p.hasPermission("ab.panel")) {
       if (playerInfoHandler.hasNotify(p, PlayerInfoHandler.Notification.REPORT)) {
-        int reports = getReports();
+        int reports = getOpenReports();
         if (reports > 0) {
           p.sendMessage(
               new TextComponent(

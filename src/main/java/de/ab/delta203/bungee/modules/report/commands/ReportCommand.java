@@ -55,7 +55,7 @@ public class ReportCommand extends Command implements TabExecutor {
         reportHandler.report(target, fromUUID, reason);
         confirmations.remove(sender);
         // broadcast
-        int reports = reportHandler.getReports();
+        int reports = reportHandler.getOpenReports();
         TextComponent textComponentContent =
             new TextComponent(
                 AdvancedBan.prefix
