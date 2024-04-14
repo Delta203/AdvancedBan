@@ -1,6 +1,7 @@
 <?php
   require_once("config.php");
-  require_once("handler.php");
+  require_once("punishments.php");
+  require_once("api/handler.php");
   require_once("messages/messages_". $language . ".php");
   $p = "index";
   if (isset($_GET["p"])) $p = htmlspecialchars($_GET["p"]);
@@ -50,12 +51,16 @@
   </head>
 
   <body>
-    <?php if (file_exists("menus/" . $p . ".php")) {
+    <?php if (file_exists("menus/" . $p . ".php") || $p == "reportHandler" || $p == "jumpHandler" || $p == "closeReportHandler") {
       if (!$session_valid) {
         include("menus/error.php");
       } else {
         include("menus/assets/navbar.php");
-        include("menus/" . $p . ".php");
+        if ($p == "reportHandler" || $p == "jumpHandler" || $p == "closeReportHandler") {
+          include("api/" . $p . ".php");
+        } else {
+          include("menus/" . $p . ".php");
+        }
       }
     } else {
       include("menus/notfound.php");

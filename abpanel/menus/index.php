@@ -1,20 +1,27 @@
 <?php
-  $reports = getReporsCount();
+  $reports = getGlobalReporsCount();
 ?>
 
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-8 text-center">
+      <?php if(isset($_GET['success'])) { ?>
+        <div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+          You have successfully completed the report!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <?php } ?>
       <div class="bg-body-tertiary py-5 mb-5">
         <image src="images/<?php if ($reports == 0) { echo("orchid.png"); } else { echo("chest.png"); }?>" width="200" height="200">
         <h1>Manage Reports</h1>
         <p class="mx-auto fs-5 text-muted">
           There are currently <?php echo($reports); ?> open reports.
         </p>
-        <button class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill" type="button" <?php if ($reports == 0) echo("disabled"); ?>>
+        <a class="d-inline-flex btn btn-success btn-lg px-4 rounded-pill <?php if ($reports == 0) echo("disabled"); ?>" href="?p=reportHandler">
           Open Report
-        </button>
+        </a>
       </div>
+
       <div class="bg-body-tertiary py-5 p-5 mb-5">
         <h1>Check Player</h1>
         <p class="mx-auto fs-5 text-muted">
@@ -30,7 +37,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <?php include("sidebar.php") ?>
+      <?php include("assets/sidebar.php") ?>
     </div>
   </div>
 </div>

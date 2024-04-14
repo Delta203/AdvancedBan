@@ -6,12 +6,20 @@ function isSessionValid() {
   $session = explode("|", $_SESSION["user"]);
   $uuid = $session[0];
   $key = $session[1];
+  if ($key == "-") return false;
   $sql = "SELECT PlayerUUID FROM AB_PlayerInfo WHERE LoginKey = '$key'";
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) {
     if ($row["PlayerUUID"] == $uuid) return true;
   }
+  /*
+  Admin account verification
+  */
   return false;
+}
+
+function millisecondsToDate($millis) {
+  return date("d/m/Y H:i:s", $millis/1000);
 }
 
 function getRegisterMillis($uuid) {
@@ -80,16 +88,41 @@ function getMutesCount($uuid) {
   return $count;
 }
 
-function getReporsCount() {
+function getReportsCount($uuid) {
   global $connection;
   $count = 0;
-  $sql = "SELECT * FROM AB_Reports WHERE 1";
+  $sql = "SELECT * FROM AB_Reports WHERE PlayerUUID = '$uuid'";
   $result = $connection->query($sql);
   while ($row = $result->fetch_assoc()) $count++;
   return $count;
 }
 
-function millisecondsToDate($millis) {
-  return date("d/m/Y H:i:s", $millis/1000);
+function getGlobalReporsCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Reports WHERE InProgress = '0'";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
 }
+
+function fetchRandomReport() {
+  global $connection;
+  $uuid = null;
+  $sql = "SELECT PlayerUUID FROM AB_Reports WHERE InProgress = 'false' ORDER BY RAND() LIMIT 1";
+  $result = $connection->query($sql);
+  if ($row = $result->fetch_assoc()) $uuid = $row['PlayerUUID'];
+  $sql = "UPDATE AB_Reports SET InProgress = '1' WHERE PlayerUUID = '$uuid'";
+  $connection->query($sql);
+  return $uuid;
+}
+
+function getLatestReport($uuid) {
+  global $connection;
+  $sql = "SELECT * FROM AB_Reports WHERE PlayerUUID = '$uuid' ORDER BY CurrentMillis DESC";
+  $result = $connection->query($sql);
+  if ($row = $result->fetch_assoc()) return $row;
+  return null;
+}
+
 ?>
