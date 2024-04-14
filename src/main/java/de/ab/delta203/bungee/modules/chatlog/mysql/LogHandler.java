@@ -31,7 +31,7 @@ public class LogHandler {
     long millis = System.currentTimeMillis();
     String uuid = p.getUniqueId().toString();
     String server = "-";
-    if (p.getServer() != null) p.getServer().getInfo().getName();
+    if (p.getServer() != null) server = p.getServer().getInfo().getName();
     try {
       PreparedStatement ps =
           connection.prepareStatement(
