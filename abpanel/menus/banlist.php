@@ -31,11 +31,11 @@ $offset = ($page-1) * 10;
         </table>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <div class="btn-group me-2" role="group">
-            <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=mutelist&page=1">1</a>
+            <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=banlist&page=1">1</a>
             <?php
               $pages = getGlobaMutesCount() / 10;
               for ($i = 2; $i <= $pages+1; $i++) { ?>
-                <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=mutelist&page=<?php echo($i); ?>"><?php echo($i); ?></a>
+                <a class="btn btn-outline-secondary" href="<?php echo($root); ?>/?p=banlist&page=<?php echo($i); ?>"><?php echo($i); ?></a>
             <?php } ?>
           </div>
         </div>
