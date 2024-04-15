@@ -34,6 +34,7 @@ public class Chat extends ReportHandler implements Listener {
   public void onChat(ChatEvent e) {
     if (e.getSender() instanceof ProxiedPlayer p) {
       String message = e.getMessage();
+      if (p.hasPermission("ab.cantbereported")) return;
       if (!AdvancedBan.config.getBoolean("chatlog.autoreport.enabled")) return;
       if (muteHandler.isMuted(p.getUniqueId().toString())) return;
       if (alreadyReported(p, AdvancedBan.config.getString("console"))) return;

@@ -41,6 +41,15 @@ public class ReportCommand extends Command implements TabExecutor {
           return;
         }
         ProxiedPlayer target = (ProxiedPlayer) confirmations.get(sender)[0];
+        if (target.hasPermission("ab.cantbereported")) {
+          sender.sendMessage(
+              new TextComponent(
+                  AdvancedBan.prefix
+                      + AdvancedBan.messages
+                          .getString("report.cant_be_reported")
+                          .replace("%player%", target.getName())));
+          return;
+        }
         String fromUUID = AdvancedBan.config.getString("console");
         String reason = (String) confirmations.get(sender)[1];
         if (sender instanceof ProxiedPlayer p) {
