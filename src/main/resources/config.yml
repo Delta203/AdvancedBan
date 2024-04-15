@@ -37,9 +37,13 @@ chatlog:
   disconnect: '<b>%player% left the game</b>'
   command: '<i>%command%</i>'
   # Report reason has to be registered
+  # Interval how many identical messages per second. (500 equals 2 messages per second)
   autoreport:
     enabled: true
     reason: 'Chat'
+    spam:
+      enabled: true
+      interval: 500
 
 # Advanced Ban panel
 # Placeholders:
