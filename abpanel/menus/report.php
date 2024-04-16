@@ -165,8 +165,8 @@ $reason = $report['Reason'];
               </thead>
               <tbody>
                 <?php
-                $start = $currentMillis - 5 * 60000;
-                $end = $currentMillis + 10 * 60000;
+                $start = $currentMillis - $chatlog_minutes_before * 60000;
+                $end = $currentMillis + $chatlog_minutes_after * 60000;
                 $sql = "SELECT * FROM AB_Chat WHERE Server = '$server' AND CurrentMillis >= '$start' AND CurrentMillis <= '$end' ORDER BY CurrentMillis";
                 $result = $connection->query($sql);
                 while ($row = $result->fetch_assoc()) { ?>
