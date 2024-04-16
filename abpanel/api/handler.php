@@ -7,11 +7,13 @@ function isSessionValid() {
   $uuid = $session[0];
   $key = $session[1];
   if ($key == "-") return false;
+  // admin account
   if ($admin_enabled) {
     if ($uuid == $admin_uuid && $key == $admin_key) {
       return true;
     }
   }
+  // uuid and login key
   $sql = "SELECT PlayerUUID FROM AB_PlayerInfo WHERE LoginKey = '$key'";
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) {
@@ -56,17 +58,18 @@ function getServer($uuid) {
   return "-";
 }
 
+function getHistoryCount($uuid) {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid'";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
 function isBanned($uuid) {
   global $connection;
   $sql = "SELECT FromUUID FROM AB_Bans WHERE PlayerUUID = '$uuid'";
-  $result = $connection->query($sql);
-  if ($row = $result->fetch_assoc()) return true;
-  return false;
-}
-
-function isMuted($uuid) {
-  global $connection;
-  $sql = "SELECT FromUUID FROM AB_Mutes WHERE PlayerUUID = '$uuid'";
   $result = $connection->query($sql);
   if ($row = $result->fetch_assoc()) return true;
   return false;
@@ -81,10 +84,36 @@ function getBansCount($uuid) {
   return $count;
 }
 
+function getGlobalBansCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Bans";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
+function isMuted($uuid) {
+  global $connection;
+  $sql = "SELECT FromUUID FROM AB_Mutes WHERE PlayerUUID = '$uuid'";
+  $result = $connection->query($sql);
+  if ($row = $result->fetch_assoc()) return true;
+  return false;
+}
+
 function getMutesCount($uuid) {
   global $connection;
   $count = 0;
   $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' AND (Type = 'mute' OR Type = 'tempmute')";
+  $result = $connection->query($sql);
+  while ($row = $result->fetch_assoc()) $count++;
+  return $count;
+}
+
+function getGlobaMutesCount() {
+  global $connection;
+  $count = 0;
+  $sql = "SELECT * FROM AB_Mutes";
   $result = $connection->query($sql);
   while ($row = $result->fetch_assoc()) $count++;
   return $count;
@@ -113,7 +142,7 @@ function fetchRandomReport() {
   $uuid = null;
   $sql = "SELECT PlayerUUID FROM AB_Reports WHERE InProgress = 'false' ORDER BY RAND() LIMIT 1";
   $result = $connection->query($sql);
-  if ($row = $result->fetch_assoc()) $uuid = $row['PlayerUUID'];
+  if ($row = $result->fetch_assoc()) $uuid = $row["PlayerUUID"];
   $sql = "UPDATE AB_Reports SET InProgress = '1' WHERE PlayerUUID = '$uuid'";
   $connection->query($sql);
   return $uuid;
@@ -126,32 +155,4 @@ function getLatestReport($uuid) {
   if ($row = $result->fetch_assoc()) return $row;
   return null;
 }
-
-function getGlobalBansCount() {
-  global $connection;
-  $count = 0;
-  $sql = "SELECT * FROM AB_Bans";
-  $result = $connection->query($sql);
-  while ($row = $result->fetch_assoc()) $count++;
-  return $count;
-}
-
-function getGlobaMutesCount() {
-  global $connection;
-  $count = 0;
-  $sql = "SELECT * FROM AB_Mutes";
-  $result = $connection->query($sql);
-  while ($row = $result->fetch_assoc()) $count++;
-  return $count;
-}
-
-function getHistoryCount($uuid) {
-  global $connection;
-  $count = 0;
-  $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid'";
-  $result = $connection->query($sql);
-  while ($row = $result->fetch_assoc()) $count++;
-  return $count;
-}
-
 ?>

@@ -1,7 +1,7 @@
 <?php
-  if (!isset($_GET['uuid'])) header("Location: " . $root);
-  $uuid = htmlspecialchars($_GET['uuid']);
-  $sql = "DELETE FROM AB_Reports WHERE PlayerUUID = '$uuid'";
-  $connection->query($sql);
-  header("Location: " . $root . "/?success");
+if (!isset($_GET["player"])) header("Location: " . $root);
+$uuid = htmlspecialchars($_GET["player"]);
+$sql = "DELETE FROM AB_Reports WHERE PlayerUUID = '$uuid'";
+$connection->query($sql);
+header("Location: " . $root . "/?success");
 ?>

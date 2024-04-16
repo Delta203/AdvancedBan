@@ -1,4 +1,4 @@
 <?php
-  unset($_SESSION["user"]);
-  header("Location: " . $root);
+unset($_SESSION["user"]);
+header("Location: " . $root);
 ?>

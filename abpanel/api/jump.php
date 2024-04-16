@@ -1,9 +1,9 @@
 <?php
-  if (!isset($_GET['report'])) header("Location: " . $root);
-  if (!isset($_GET['server'])) header("Location: " . $root);
-  $report = htmlspecialchars($_GET['report']);
-  $server = htmlspecialchars($_GET['server']);
-  $sql = "INSERT INTO AB_CommandQuery (SenderUUID, Command) VALUES ('$session_uuid', 'server $server')";
-  $connection->query($sql);
-  header("Location: " . $root . "/?p=report&uuid=" . $report . "&jumped");
+if (!isset($_GET["player"])) header("Location: " . $root);
+if (!isset($_GET["server"])) header("Location: " . $root);
+$uuid = htmlspecialchars($_GET["player"]);
+$server = htmlspecialchars($_GET["server"]);
+$sql = "INSERT INTO AB_CommandQuery (SenderUUID, Command) VALUES ('$session_uuid', 'server $server')";
+$connection->query($sql);
+header("Location: " . $root . "/?p=report&uuid=" . $uuid . "&jumped");
 ?>

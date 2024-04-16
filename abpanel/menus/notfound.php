@@ -1,4 +1,4 @@
 <div class="container pt-5">
-  <h1>Not Found</h1>
-  <p>The requested URL was not found on this server.</p>
+  <h1><?php echo($messages_not_found); ?></h1>
+  <p><?php echo($messages_not_found_info); ?></p>
 </div>
