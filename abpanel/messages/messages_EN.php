@@ -1,4 +1,17 @@
 <?php
+# Placeholders:
+#   %player%    | Player name
+#   %uuid%      | Player uuid
+#   %from%      | From player name
+#   %fromUUID%  | From player uuid
+#   %key%       | Session key*
+#   %server%    | Server
+#   %date%      | Date
+#   %reason%    | Reason
+#   %bans%      | Amount of bans
+#   %mutes%     | Amount of mutes
+#   %reports%   | Amount of reports
+
 $messages_title = "Advanced Ban Panel";
 
 $messages_name = "Name";
