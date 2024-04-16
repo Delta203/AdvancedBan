@@ -1,7 +1,7 @@
 <?php
 $page = 1;
 if (isset($_GET["page"])) $page = htmlspecialchars($_GET["page"]);
-$offset = ($page-1) * 10;
+$offset = ($page-1) * $max_mutelist;
 ?>
 
 <div class="container mt-3">
@@ -18,7 +18,7 @@ $offset = ($page-1) * 10;
           </thead>
           <tbody>
             <?php
-            $sql = "SELECT Reason, PlayerUUID FROM AB_Mutes LIMIT 10 OFFSET $offset";
+            $sql = "SELECT Reason, PlayerUUID FROM AB_Mutes LIMIT $max_mutelist OFFSET $offset";
             $result = $connection->query($sql);
             while ($row = $result->fetch_assoc()) {
               $name = getName($row["PlayerUUID"]); ?>
@@ -33,7 +33,7 @@ $offset = ($page-1) * 10;
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <div class="btn-group me-2" role="group">
             <?php
-            $pages = getGlobaMutesCount() / 10;
+            $pages = getGlobaMutesCount() / $max_mutelist;
             for ($i = 1; $i <= $pages+1; $i++) { ?>
               <a class="btn btn-outline-secondary <?php if ($i == $page) echo("active"); ?>"
                 href="<?php echo($root); ?>/?p=mutelist&page=<?php echo($i); ?>"><?php echo($i); ?></a>
