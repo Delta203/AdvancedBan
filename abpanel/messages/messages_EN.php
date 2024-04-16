@@ -91,6 +91,7 @@ $messages_report_name = "Name:";
 $messages_report_uuid = "UUID: <b>%uuid%</b>";
 $messages_report_date = "Date: <b>%date%</b>";
 $messages_report_server = "Server: <b>%server%</b>";
+$messages_report_chat = "Chat Log:";
 $messages_report_from = "From: <b>%from%</b>";
 $messages_report_from_uuid = "From UUID: <b>%fromUUID%</b>";
 $messages_report_punish = "Punish the player <b>%player%</b>!";

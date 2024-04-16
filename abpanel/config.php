@@ -5,7 +5,7 @@ $https_redirect = false;
 # Languages supported:
 #   EN    | English
 #   DE    | German
-$language = "DE";
+$language = "EN";
 
 $mysql_host = "127.0.0.1";
 $mysql_database = "test";

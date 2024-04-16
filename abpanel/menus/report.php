@@ -4,12 +4,12 @@ $uuid = htmlspecialchars($_GET["uuid"]);
 $report = getLatestReport($uuid);
 if ($report == null) header("Location: " . $root);
 $name = getName($uuid);
-$fromUUID = $report['FromUUID'];
+$fromUUID = $report["FromUUID"];
 $fromName = getName($fromUUID);
-$currentMillis = $report['CurrentMillis'];
+$currentMillis = $report["CurrentMillis"];
 $date = millisecondsToDate($currentMillis);
-$server = $report['Server'];
-$reason = $report['Reason'];
+$server = $report["Server"];
+$reason = $report["Reason"];
 ?>
 
 <div class="container mt-3">
@@ -28,7 +28,7 @@ $reason = $report['Reason'];
         </li>
       </ul>
 
-      <?php if(isset($_GET['jumped'])) { ?>
+      <?php if(isset($_GET["jumped"])) { ?>
         <div class="alert alert-success alert-dismissible fade show my-0" role="alert">
           <?php echo(str_replace("%server%", $server, $messages_alert_jumped)); ?>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -125,14 +125,17 @@ $reason = $report['Reason'];
             <div class="row">
               <div class="col-md-6">
                 <p class="fs-5 text-muted">
-                  <?php echo(str_replace("%reason%", $row['Reason'], $messages_report_reason)); ?><br>
-                  <?php echo(str_replace("%date%", millisecondsToDate($row['CurrentMillis']), $messages_report_date)); ?>
+                  <?php echo(str_replace("%reason%", $row["Reason"], $messages_report_reason)); ?><br>
+                  <?php echo(str_replace("%date%", millisecondsToDate($row["CurrentMillis"]), $messages_report_date)); ?><br>
+                  <?php echo($messages_report_chat); ?> <a class="text-decoration-none"
+                    href="<?php echo($root); ?>/?p=chatlog&player=<?php echo($uuid); ?>&millis=<?php echo($row["CurrentMillis"]); ?>"
+                    target="_blank"><?php echo($row["CurrentMillis"]); ?></a>
                 </p>
               </div>
               <div class="col-md-6">
                 <p class="fs-5 text-muted">
-                  <?php echo(str_replace("%from%", getName($row['FromUUID']), $messages_report_from)); ?><br>
-                  <?php echo(str_replace("%fromUUID%", $row['FromUUID'], $messages_report_from_uuid)); ?>
+                  <?php echo(str_replace("%from%", getName($row["FromUUID"]), $messages_report_from)); ?><br>
+                  <?php echo(str_replace("%fromUUID%", $row["FromUUID"], $messages_report_from_uuid)); ?>
                 </p>
               </div>
             </div>
@@ -171,12 +174,12 @@ $reason = $report['Reason'];
                 $result = $connection->query($sql);
                 while ($row = $result->fetch_assoc()) { ?>
                   <tr>
-                    <td><?php echo(millisecondsToDate($row['CurrentMillis'])); ?></td>
-                    <td><?php echo($row['Server']); ?></td>
-                    <td><?php if (getName($row['PlayerUUID']) == $name) { echo("<b>" . getName($row['PlayerUUID']) . "</b>"); } else {
-                      echo(getName($row['PlayerUUID'])); } ?></td>
-                    <td><?php if (str_contains($row['Message'], "/report")) { echo("<u>" . $row['Message'] . "</u>"); } else {
-                      echo($row['Message']); } ?></td>
+                    <td><?php echo(millisecondsToDate($row["CurrentMillis"])); ?></td>
+                    <td><?php echo($row["Server"]); ?></td>
+                    <td><?php if (getName($row["PlayerUUID"]) == $name) { echo("<b>" . getName($row["PlayerUUID"]) . "</b>"); } else {
+                      echo(getName($row["PlayerUUID"])); } ?></td>
+                    <td><?php if (str_contains($row["Message"], "/report")) { echo("<u>" . $row["Message"] . "</u>"); } else {
+                      echo($row["Message"]); } ?></td>
                   </tr>
                 <?php } ?>
               </tbody>
