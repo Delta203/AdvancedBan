@@ -13,7 +13,7 @@ $isMuted = isMuted($uuid);
 
 $page = 1;
 if (isset($_GET["page"])) $page = htmlspecialchars($_GET["page"]);
-$offset = ($page-1) * 10;
+$offset = ($page-1) * $max_historylist;
 ?>
 
 <div class="container mt-3">
@@ -111,7 +111,7 @@ $offset = ($page-1) * 10;
           </thead>
           <tbody>
             <?php
-            $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' ORDER BY CurrentMillis DESC LIMIT 10 OFFSET $offset";
+            $sql = "SELECT * FROM AB_PlayerHistory WHERE PlayerUUID = '$uuid' ORDER BY CurrentMillis DESC LIMIT $max_historylist OFFSET $offset";
             $result = $connection->query($sql);
             while ($row = $result->fetch_assoc()) { ?>
               <tr>
@@ -127,7 +127,7 @@ $offset = ($page-1) * 10;
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <div class="btn-group me-2" role="group">
             <?php
-            $pages = getHistoryCount($uuid) / 10;
+            $pages = getHistoryCount($uuid) / $max_historylist;
             for ($i = 1; $i <= $pages+1; $i++) { ?>
               <a class="btn btn-outline-secondary <?php if ($i == $page) echo("active"); ?>"
                 href="<?php echo($root); ?>/?p=check&player=<?php echo($name); ?>&page=<?php echo($i); ?>"><?php echo($i); ?></a>
