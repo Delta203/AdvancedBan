@@ -27,6 +27,7 @@ Comprehensive ban, mute and report system with web panel.
 - Mute players permanently or temporarily.
 - Report players who do not behave.
 - Manage reports and players with a web panel
+- Monitor the chat using the chat log system.
 
 ## Languages:
 - English (EN)
