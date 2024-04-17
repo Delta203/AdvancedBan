@@ -1,7 +1,7 @@
 # AdvancedBan
 Comprehensive ban, mute and report system with web panel.
 
-## Server requirements:
+## Requirements:
 - java 1.17
 - PHP 8
 - Bungeecord
@@ -9,6 +9,8 @@ Comprehensive ban, mute and report system with web panel.
 - HTTP Server (Apache)
 
 ## Installation:
+1. Setup **bungeecord**
+2. Setup **web panel**
 ### Bungeecord:
 1. Put the .jar file into your plugins folder.
 2. Start your server and stop it after the configuration files have been created.
@@ -20,10 +22,15 @@ Comprehensive ban, mute and report system with web panel.
 3. Restart your web server -> **done**
 
 ## Functions:
+- Main command: `/advancedban`
 - Ban players permanently or temporarily.
 - Mute players permanently or temporarily.
 - Report players who do not behave.
 - Manage reports and players with a web panel
+
+## Languages:
+- English (EN)
+- Deutsch (DE)
 
 ## Login key:
 ````
