@@ -51,7 +51,7 @@ $reason = $report["Reason"];
         </div>
         <p class="fs-5 text-muted">
           <?php echo($messages_report_name); ?> <a class="text-decoration-none" href="<?php echo($root . "/?p=check&player=" . $uuid); ?>" target="_blank">
-            <?php echo($name); ?>
+            <?php echo($name); ?></a>
           <a class="text-body-secondary" href="" onclick="copyToClipboard('<?php echo($name); ?>');">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0
