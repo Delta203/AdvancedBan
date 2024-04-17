@@ -5,7 +5,7 @@ $https_redirect = false;
 # Server types:
 #   BUNGEECORD
 #   SPIGOT
-$server_type = "SPIGOT";
+$server_type = "BUNGEECORD";
 
 # Languages supported:
 #   EN    | English
@@ -19,7 +19,7 @@ $mysql_password = "";
 
 # Admin session
 # Make sure $admin_uuid equals console name from server plugin config.
-$admin_enabled = true;
+$admin_enabled = false;
 $admin_uuid = "Console";
 $admin_key = "key";
 
