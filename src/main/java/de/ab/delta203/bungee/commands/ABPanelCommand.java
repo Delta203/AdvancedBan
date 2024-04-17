@@ -1,7 +1,8 @@
 package de.ab.delta203.bungee.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.bungee.AdvancedBanBungee;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -25,20 +26,19 @@ public class ABPanelCommand extends Command {
       if (p.hasPermission("ab.panel")) {
         String key = playerInfoHandler.getLoginKey(p.getUniqueId().toString());
         String link =
-            AdvancedBan.config
-                .getString("link")
+            ((String) AdvancedBan.config.get("link"))
                 .replace("%uuid%", p.getUniqueId().toString())
                 .replace("%key%", key);
         TextComponent textComponent =
-            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("abpanel.title"));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("abpanel.title"));
         textComponent.setHoverEvent(
             new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,
-                new Text(AdvancedBan.messages.getString("abpanel.hover"))));
+                new Text((String) AdvancedBan.messages.get("abpanel.hover"))));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, link));
         p.sendMessage(textComponent);
       } else {
-        sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
+        sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
       }
     }
   }

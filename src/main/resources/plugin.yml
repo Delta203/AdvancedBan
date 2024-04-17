@@ -1,16 +1,34 @@
 name: AdvancedBan
 version: 1.3
+api-version: 1.20
 author: Delta203
 
-main: de.ab.delta203.bungee.AdvancedBan
+main: de.ab.delta203.spigot.AdvancedBanSpigot
 
-# Permissions:
-# - ab.ban
-# - ab.tempban
-# - ab.unban
-# - ab.mute
-# - ab.tempmute
-# - ab.unmute
-# - ab.check
-# - ab.panel
-# - ab.cantbereported
+commands:
+  advancedban:
+    description: Advanced Ban main command
+  ban:
+    description: Ban a player
+  tempban:
+    description: Ban a player temporarily
+  unban:
+    description: Unban a player
+  mute:
+    description: Mute a player
+  tempmute:
+    description: Mute a player temporarily
+  unmute:
+    description: Unmute a player
+  report:
+    description: Report a player
+  check:
+    description: Check a player
+  abpanel:
+    description: Open the link to the web panel
+  togglebannotify:
+    description: Toggle ban notifications
+  togglemutenotify:
+    description: Toggle mute notifications
+  togglereportnotify:
+    description: Toggle report notifications

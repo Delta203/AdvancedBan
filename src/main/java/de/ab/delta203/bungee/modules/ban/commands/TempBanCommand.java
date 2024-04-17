@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.ban.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.ban.mysql.BanHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import java.util.ArrayList;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -25,7 +25,7 @@ public class TempBanCommand extends Command implements TabExecutor {
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (!sender.hasPermission("ab.tempban")) {
-      sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
+      sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
       return;
     }
     if (args.length >= 4) {
@@ -35,14 +35,14 @@ public class TempBanCommand extends Command implements TabExecutor {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
+                    + ((String) AdvancedBan.messages.get("not_registered"))
+                        .replace("%player%", name)));
         return;
       }
-      if (!AdvancedBan.config.getBoolean("self")) {
+      if (!(boolean) AdvancedBan.config.get("self")) {
         if (sender.getName().equals(name)) {
           sender.sendMessage(
-              new TextComponent(
-                  AdvancedBan.prefix + AdvancedBan.messages.getString("ban.not_yourself")));
+              new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("ban.not_yourself")));
           return;
         }
       }
@@ -50,8 +50,7 @@ public class TempBanCommand extends Command implements TabExecutor {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("ban.already_banned")
+                    + ((String) AdvancedBan.messages.get("ban.already_banned"))
                         .replace("%player%", name)));
         return;
       }
@@ -60,45 +59,42 @@ public class TempBanCommand extends Command implements TabExecutor {
         value = Long.parseLong(args[1]);
       } catch (NumberFormatException e) {
         sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("unit.not_a_number")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.not_a_number")));
         return;
       }
-      if (value > AdvancedBan.config.getInt("max")) {
+      if (value > (int) AdvancedBan.config.get("max")) {
         sender.sendMessage(
-            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("unit.to_big")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.to_big")));
         return;
       }
       if (value <= 0) {
         sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("unit.invalid_value")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.invalid_value")));
         return;
       }
       String unit = args[2];
       String unitName;
-      if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.seconds.alias"))) {
+      if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.seconds.alias"))) {
         value *= 1000;
-        unitName = AdvancedBan.messages.getString("unit.seconds.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.minutes.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.seconds.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.minutes.alias"))) {
         value *= 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.minutes.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.hours.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.minutes.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.hours.alias"))) {
         value *= 60 * 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.hours.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.days.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.hours.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.days.alias"))) {
         value *= 24 * 60 * 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.days.name");
+        unitName = (String) AdvancedBan.messages.get("unit.days.name");
       } else {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("unit.invalid_unit")
-                        .replace("%sec%", AdvancedBan.messages.getString("unit.seconds.alias"))
-                        .replace("%min%", AdvancedBan.messages.getString("unit.minutes.alias"))
-                        .replace("%hour%", AdvancedBan.messages.getString("unit.hours.alias"))
-                        .replace("%day%", AdvancedBan.messages.getString("unit.days.alias"))));
+                    + ((String) AdvancedBan.messages.get("unit.invalid_unit"))
+                        .replace("%sec%", (String) AdvancedBan.messages.get("unit.seconds.alias"))
+                        .replace("%min%", (String) AdvancedBan.messages.get("unit.minutes.alias"))
+                        .replace("%hour%", (String) AdvancedBan.messages.get("unit.hours.alias"))
+                        .replace("%day%", (String) AdvancedBan.messages.get("unit.days.alias"))));
         return;
       }
       // valid
@@ -106,8 +102,8 @@ public class TempBanCommand extends Command implements TabExecutor {
       for (int i = 3; i < args.length; i++) {
         reason.append(args[i]).append(" ");
       }
-      String senderUUID = AdvancedBan.config.getString("console");
-      String senderDName = AdvancedBan.config.getString("console");
+      String senderUUID = (String) AdvancedBan.config.get("console");
+      String senderDName = (String) AdvancedBan.config.get("console");
       if (sender instanceof ProxiedPlayer p) {
         senderUUID = p.getUniqueId().toString();
         senderDName = p.getDisplayName();
@@ -119,8 +115,7 @@ public class TempBanCommand extends Command implements TabExecutor {
         ip = target.getSocketAddress().toString().split(":")[0];
         target.disconnect(
             new TextComponent(
-                AdvancedBan.messages
-                    .getString("ban.message.kick")
+                ((String) AdvancedBan.messages.get("ban.message.kick"))
                     .replace("%reason%", reason)
                     .replace("\\n", "\n")));
       }
@@ -129,13 +124,13 @@ public class TempBanCommand extends Command implements TabExecutor {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("ban.success.ban").replace("%player%", name)));
+                  + ((String) AdvancedBan.messages.get("ban.success.ban"))
+                      .replace("%player%", name)));
       // broadcast
       TextComponent textComponent =
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("ban.notification")
+                  + ((String) AdvancedBan.messages.get("ban.notification"))
                       .replace("%player%", name)
                       .replace("%from%", sender.getName())
                       .replace("%fromDN%", senderDName)
@@ -144,7 +139,8 @@ public class TempBanCommand extends Command implements TabExecutor {
                       .replace("\\n", "\n"));
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.ban") || all.hasPermission("ab.tempban")) {
-          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.BAN)) {
+          if (playerInfoHandler.hasNotify(
+              all.getUniqueId().toString(), PlayerInfoHandler.Notification.BAN)) {
             if (all == target) continue;
             all.sendMessage(textComponent);
           }
@@ -152,8 +148,7 @@ public class TempBanCommand extends Command implements TabExecutor {
       }
     } else {
       sender.sendMessage(
-          new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("ban.help.tempban")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("ban.help.tempban")));
     }
   }
 
@@ -161,10 +156,10 @@ public class TempBanCommand extends Command implements TabExecutor {
   public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
     if (args.length == 3) {
       ArrayList<String> arguments = new ArrayList<>();
-      arguments.add(AdvancedBan.messages.getString("unit.seconds.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.minutes.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.hours.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.days.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.seconds.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.minutes.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.hours.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.days.alias"));
       return arguments;
     }
     return new ArrayList<>();

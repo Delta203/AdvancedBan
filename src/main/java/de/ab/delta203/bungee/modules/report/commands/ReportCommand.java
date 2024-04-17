@@ -1,11 +1,11 @@
 package de.ab.delta203.bungee.modules.report.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.report.mysql.ReportHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import de.ab.delta203.bungee.modules.report.mysql.ReportHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import java.util.List;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -37,7 +37,7 @@ public class ReportCommand extends Command implements TabExecutor {
         if (!confirmations.containsKey(sender)) {
           sender.sendMessage(
               new TextComponent(
-                  AdvancedBan.prefix + AdvancedBan.messages.getString("report.cant_be_confirmed")));
+                  AdvancedBan.prefix + AdvancedBan.messages.get("report.cant_be_confirmed")));
           return;
         }
         ProxiedPlayer target = (ProxiedPlayer) confirmations.get(sender)[0];
@@ -45,12 +45,11 @@ public class ReportCommand extends Command implements TabExecutor {
           sender.sendMessage(
               new TextComponent(
                   AdvancedBan.prefix
-                      + AdvancedBan.messages
-                          .getString("report.cant_be_reported")
+                      + ((String) AdvancedBan.messages.get("report.cant_be_reported"))
                           .replace("%player%", target.getName())));
           return;
         }
-        String fromUUID = AdvancedBan.config.getString("console");
+        String fromUUID = (String) AdvancedBan.config.get("console");
         String reason = (String) confirmations.get(sender)[1];
         if (sender instanceof ProxiedPlayer p) {
           fromUUID = p.getUniqueId().toString();
@@ -58,30 +57,31 @@ public class ReportCommand extends Command implements TabExecutor {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("report.confirmed")
+                    + ((String) AdvancedBan.messages.get("report.confirmed"))
                         .replace("%player%", target.getName())));
-        reportHandler.report(target, fromUUID, reason);
+        reportHandler.report(
+            target.getUniqueId().toString(),
+            fromUUID,
+            target.getServer().getInfo().getName(),
+            reason);
         confirmations.remove(sender);
         // broadcast
         int reports = reportHandler.getOpenReports();
         TextComponent textComponentContent =
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("report.notification.new.title")
+                    + ((String) AdvancedBan.messages.get("report.notification.new.title"))
                         .replace("%player%", target.getName())
                         .replace("%reason%", reason)
                         .replace("\\n", "\n"));
         TextComponent textComponentServer =
             new TextComponent(
-                AdvancedBan.messages
-                    .getString("report.notification.new.server")
+                ((String) AdvancedBan.messages.get("report.notification.new.server"))
                     .replace("%server%", target.getServer().getInfo().getName()));
         textComponentServer.setHoverEvent(
             new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,
-                new Text(AdvancedBan.messages.getString("report.notification.new.hover"))));
+                new Text((String) AdvancedBan.messages.get("report.notification.new.hover"))));
         textComponentServer.setClickEvent(
             new ClickEvent(
                 ClickEvent.Action.RUN_COMMAND,
@@ -90,12 +90,12 @@ public class ReportCommand extends Command implements TabExecutor {
         TextComponent textComponentReports =
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("report.notification.open")
+                    + ((String) AdvancedBan.messages.get("report.notification.open"))
                         .replace("%reports%", String.valueOf(reports)));
         for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
           if (all.hasPermission("ab.panel")) {
-            if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.REPORT)) {
+            if (playerInfoHandler.hasNotify(
+                all.getUniqueId().toString(), PlayerInfoHandler.Notification.REPORT)) {
               all.sendMessage(textComponentContent);
               all.sendMessage(textComponentReports);
             }
@@ -110,16 +110,14 @@ public class ReportCommand extends Command implements TabExecutor {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("report.reporting.title")
+                  + ((String) AdvancedBan.messages.get("report.reporting.title"))
                       .replace("%player%", target.getName())));
       TextComponent reasons = new TextComponent();
-      for (String reason : AdvancedBan.messages.getStringList("report.reasons")) {
+      for (Object reason : (List<?>) AdvancedBan.messages.get("report.reasons")) {
         TextComponent tc =
             new TextComponent(
-                AdvancedBan.messages
-                    .getString("report.reporting.reason")
-                    .replace("%reason%", reason));
+                ((String) AdvancedBan.messages.get("report.reporting.reason"))
+                    .replace("%reason%", (String) reason));
         tc.setClickEvent(
             new ClickEvent(
                 ClickEvent.Action.RUN_COMMAND, "/report " + target.getName() + " " + reason));
@@ -127,8 +125,7 @@ public class ReportCommand extends Command implements TabExecutor {
             new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,
                 new Text(
-                    AdvancedBan.messages
-                        .getString("report.reporting.hover")
+                    ((String) AdvancedBan.messages.get("report.reporting.hover"))
                         .replace("%player%", target.getName()))));
         reasons.addExtra(tc);
       }
@@ -137,36 +134,34 @@ public class ReportCommand extends Command implements TabExecutor {
       ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
       if (!validate(sender, args[0])) return;
       String reason = args[1];
-      if (!AdvancedBan.messages.getStringList("report.reasons").contains(reason)) {
+      if (!((List<?>) AdvancedBan.messages.get("report.reasons")).contains(reason)) {
         sender.sendMessage(
             new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("report.invalid_reason")));
+                AdvancedBan.prefix + AdvancedBan.messages.get("report.invalid_reason")));
         return;
       }
       // valid
       TextComponent confirm =
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("report.confirm.info")
+                  + ((String) AdvancedBan.messages.get("report.confirm.info"))
                       .replace("%player%", target.getName())
                       .replace("%reason%", reason));
       TextComponent tc =
-          new TextComponent(AdvancedBan.messages.getString("report.confirm.confirm"));
+          new TextComponent((String) AdvancedBan.messages.get("report.confirm.confirm"));
       tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/report $confirm"));
       tc.setHoverEvent(
           new HoverEvent(
               HoverEvent.Action.SHOW_TEXT,
               new Text(
-                  AdvancedBan.messages
-                      .getString("report.confirm.hover")
+                  ((String) AdvancedBan.messages.get("report.confirm.hover"))
                       .replace("%player%", target.getName()))));
       confirm.addExtra(tc);
       sender.sendMessage(confirm);
       confirmations.put(sender, new Object[] {target, reason});
     } else {
       sender.sendMessage(
-          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("report.help")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("report.help")));
     }
   }
 
@@ -176,14 +171,15 @@ public class ReportCommand extends Command implements TabExecutor {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("not_online").replace("%player%", targetName)));
+                  + ((String) AdvancedBan.messages.get("not_online"))
+                      .replace("%player%", targetName)));
       return false;
     }
-    if (!AdvancedBan.config.getBoolean("self")) {
+    if (!(boolean) AdvancedBan.config.get("self")) {
       if (target == sender) {
         sender.sendMessage(
             new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("report.not_yourself")));
+                AdvancedBan.prefix + AdvancedBan.messages.get("report.not_yourself")));
         return false;
       }
     }
@@ -191,21 +187,19 @@ public class ReportCommand extends Command implements TabExecutor {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("report.cant_be_reported")
+                  + ((String) AdvancedBan.messages.get("report.cant_be_reported"))
                       .replace("%player%", target.getName())));
       return false;
     }
-    String senderUUID = AdvancedBan.config.getString("console");
+    String senderUUID = (String) AdvancedBan.config.get("console");
     if (sender instanceof ProxiedPlayer p) {
       senderUUID = p.getUniqueId().toString();
     }
-    if (reportHandler.alreadyReported(target, senderUUID)) {
+    if (reportHandler.alreadyReported(target.getUniqueId().toString(), senderUUID)) {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("report.already_reported")
+                  + ((String) AdvancedBan.messages.get("report.already_reported"))
                       .replace("%player%", target.getName())));
       return false;
     }
@@ -224,7 +218,11 @@ public class ReportCommand extends Command implements TabExecutor {
       }
       return locals;
     } else if (args.length == 2) {
-      return new ArrayList<>(AdvancedBan.messages.getStringList("report.reasons"));
+      ArrayList<String> reasons = new ArrayList<>();
+      for (Object reason : (List<?>) AdvancedBan.messages.get("report.reasons")) {
+        reasons.add((String) reason);
+      }
+      return reasons;
     }
     return new ArrayList<>();
   }

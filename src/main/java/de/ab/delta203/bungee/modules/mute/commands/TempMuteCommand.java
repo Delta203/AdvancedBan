@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.mute.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,7 +26,7 @@ public class TempMuteCommand extends Command implements TabExecutor {
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (!sender.hasPermission("ab.tempmute")) {
-      sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
+      sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
       return;
     }
     if (args.length >= 4) {
@@ -36,14 +36,15 @@ public class TempMuteCommand extends Command implements TabExecutor {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
+                    + ((String) AdvancedBan.messages.get("not_registered"))
+                        .replace("%player%", name)));
         return;
       }
-      if (!AdvancedBan.config.getBoolean("self")) {
+      if (!(boolean) AdvancedBan.config.get("self")) {
         if (sender.getName().equals(name)) {
           sender.sendMessage(
               new TextComponent(
-                  AdvancedBan.prefix + AdvancedBan.messages.getString("mute.not_yourself")));
+                  AdvancedBan.prefix + AdvancedBan.messages.get("mute.not_yourself")));
           return;
         }
       }
@@ -51,8 +52,7 @@ public class TempMuteCommand extends Command implements TabExecutor {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("mute.already_muted")
+                    + ((String) AdvancedBan.messages.get("mute.already_muted"))
                         .replace("%player%", name)));
         return;
       }
@@ -61,45 +61,42 @@ public class TempMuteCommand extends Command implements TabExecutor {
         value = Long.parseLong(args[1]);
       } catch (NumberFormatException e) {
         sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("unit.not_a_number")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.not_a_number")));
         return;
       }
-      if (value > AdvancedBan.config.getInt("max")) {
+      if (value > (int) AdvancedBan.config.get("max")) {
         sender.sendMessage(
-            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("unit.to_big")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.to_big")));
         return;
       }
       if (value <= 0) {
         sender.sendMessage(
-            new TextComponent(
-                AdvancedBan.prefix + AdvancedBan.messages.getString("unit.invalid_value")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("unit.invalid_value")));
         return;
       }
       String unit = args[2];
       String unitName;
-      if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.seconds.alias"))) {
+      if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.seconds.alias"))) {
         value *= 1000;
-        unitName = AdvancedBan.messages.getString("unit.seconds.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.minutes.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.seconds.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.minutes.alias"))) {
         value *= 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.minutes.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.hours.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.minutes.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.hours.alias"))) {
         value *= 60 * 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.hours.name");
-      } else if (unit.equalsIgnoreCase(AdvancedBan.messages.getString("unit.days.alias"))) {
+        unitName = (String) AdvancedBan.messages.get("unit.hours.name");
+      } else if (unit.equalsIgnoreCase((String) AdvancedBan.messages.get("unit.days.alias"))) {
         value *= 24 * 60 * 60 * 1000;
-        unitName = AdvancedBan.messages.getString("unit.days.name");
+        unitName = (String) AdvancedBan.messages.get("unit.days.name");
       } else {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("unit.invalid_unit")
-                        .replace("%sec%", AdvancedBan.messages.getString("unit.seconds.alias"))
-                        .replace("%min%", AdvancedBan.messages.getString("unit.minutes.alias"))
-                        .replace("%hour%", AdvancedBan.messages.getString("unit.hours.alias"))
-                        .replace("%day%", AdvancedBan.messages.getString("unit.days.alias"))));
+                    + ((String) AdvancedBan.messages.get("unit.invalid_unit"))
+                        .replace("%sec%", (String) AdvancedBan.messages.get("unit.seconds.alias"))
+                        .replace("%min%", (String) AdvancedBan.messages.get("unit.minutes.alias"))
+                        .replace("%hour%", (String) AdvancedBan.messages.get("unit.hours.alias"))
+                        .replace("%day%", (String) AdvancedBan.messages.get("unit.days.alias"))));
         return;
       }
       // valid
@@ -107,8 +104,8 @@ public class TempMuteCommand extends Command implements TabExecutor {
       for (int i = 3; i < args.length; i++) {
         reason.append(args[i]).append(" ");
       }
-      String senderUUID = AdvancedBan.config.getString("console");
-      String senderDName = AdvancedBan.config.getString("console");
+      String senderUUID = (String) AdvancedBan.config.get("console");
+      String senderDName = (String) AdvancedBan.config.get("console");
       if (sender instanceof ProxiedPlayer p) {
         senderUUID = p.getUniqueId().toString();
         senderDName = p.getDisplayName();
@@ -119,13 +116,13 @@ public class TempMuteCommand extends Command implements TabExecutor {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("mute.success.mute").replace("%player%", name)));
+                  + ((String) AdvancedBan.messages.get("mute.success.mute"))
+                      .replace("%player%", name)));
       // broadcast
       TextComponent textComponent =
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("mute.notification")
+                  + ((String) AdvancedBan.messages.get("mute.notification"))
                       .replace("%player%", name)
                       .replace("%from%", sender.getName())
                       .replace("%fromDN%", senderDName)
@@ -134,15 +131,15 @@ public class TempMuteCommand extends Command implements TabExecutor {
                       .replace("\\n", "\n"));
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.mute") || all.hasPermission("ab.tempmute")) {
-          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.MUTE)) {
+          if (playerInfoHandler.hasNotify(
+              all.getUniqueId().toString(), PlayerInfoHandler.Notification.MUTE)) {
             all.sendMessage(textComponent);
           }
         }
       }
     } else {
       sender.sendMessage(
-          new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("mute.help.tempmute")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("mute.help.tempmute")));
     }
   }
 
@@ -150,10 +147,10 @@ public class TempMuteCommand extends Command implements TabExecutor {
   public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
     if (args.length == 3) {
       ArrayList<String> arguments = new ArrayList<>();
-      arguments.add(AdvancedBan.messages.getString("unit.seconds.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.minutes.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.hours.alias"));
-      arguments.add(AdvancedBan.messages.getString("unit.days.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.seconds.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.minutes.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.hours.alias"));
+      arguments.add((String) AdvancedBan.messages.get("unit.days.alias"));
       return arguments;
     }
     return new ArrayList<>();

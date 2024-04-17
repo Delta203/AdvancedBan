@@ -4,15 +4,15 @@ Comprehensive ban, mute and report system with web panel.
 ## Requirements:
 - java 1.17
 - PHP 8
-- Bungeecord
+- Bungeecord / Spigot
 - MySQl (MariaDB)
 - HTTP Server (Apache)
 
 ## Installation:
 1. Unzip .zip file
-2. Setup **bungeecord**
+2. Setup **server**
 3. Setup **web panel**
-### Bungeecord:
+### Server (Bungeecord / Spigot):
 1. Put the .jar file into your plugins folder.
 2. Start your server and stop it after the configuration files have been created.
 3. Insert mysql connection data into `config.yml`.

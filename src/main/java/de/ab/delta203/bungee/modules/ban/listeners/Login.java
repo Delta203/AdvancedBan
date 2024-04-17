@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.ban.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.ban.mysql.BanHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -34,8 +34,7 @@ public class Login extends BanHandler implements Listener {
         e.setCancelled(true);
         e.setReason(
             new TextComponent(
-                AdvancedBan.messages
-                    .getString("ban.message.login")
+                ((String) AdvancedBan.messages.get("ban.message.login"))
                     .replace("%reason%", reason)
                     .replace("%duration%", duration)
                     .replace("\\n", "\n")));
@@ -49,7 +48,7 @@ public class Login extends BanHandler implements Listener {
       e.setCancelled(true);
       e.setReason(
           new TextComponent(
-              AdvancedBan.messages.getString("ban.message.ipban").replace("\\n", "\n")));
+              ((String) AdvancedBan.messages.get("ban.message.ipban")).replace("\\n", "\n")));
     }
   }
 }

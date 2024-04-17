@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.report.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.report.mysql.ReportHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.report.mysql.ReportHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import java.sql.Connection;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,14 +23,14 @@ public class Switch extends ReportHandler implements Listener {
   public void onSwitch(ServerSwitchEvent e) {
     ProxiedPlayer p = e.getPlayer();
     if (p.hasPermission("ab.panel")) {
-      if (playerInfoHandler.hasNotify(p, PlayerInfoHandler.Notification.REPORT)) {
+      if (playerInfoHandler.hasNotify(
+          p.getUniqueId().toString(), PlayerInfoHandler.Notification.REPORT)) {
         int reports = getOpenReports();
         if (reports > 0) {
           p.sendMessage(
               new TextComponent(
                   AdvancedBan.prefix
-                      + AdvancedBan.messages
-                          .getString("report.notification.open")
+                      + ((String) AdvancedBan.messages.get("report.notification.open"))
                           .replace("%reports%", String.valueOf(reports))));
         }
       }

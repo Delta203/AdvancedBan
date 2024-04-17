@@ -1,9 +1,8 @@
 package de.ab.delta203.bungee.modules.mute.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.mute.mysql.MuteHandler;
 import java.sql.Connection;
-
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -29,8 +28,7 @@ public class Chat extends MuteHandler implements Listener {
           e.setCancelled(true);
           p.sendMessage(
               new TextComponent(
-                  AdvancedBan.messages
-                      .getString("mute.message")
+                  ((String) AdvancedBan.messages.get("mute.message"))
                       .replace("%reason%", getReason(uuid))
                       .replace("%duration%", getDuration(uuid))
                       .replace("\\n", "\n")));

@@ -1,6 +1,6 @@
 package de.ab.delta203.bungee.files;
 
-import de.ab.delta203.bungee.AdvancedBan;
+import de.ab.delta203.bungee.AdvancedBanBungee;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -31,7 +31,7 @@ public class FileManager {
    */
   public FileManager(String filename) {
     this.filename = filename;
-    file = new File(AdvancedBan.plugin.getDataFolder(), filename);
+    file = new File(AdvancedBanBungee.plugin.getDataFolder(), filename);
   }
 
   /**
@@ -39,14 +39,14 @@ public class FileManager {
    * it as well.
    */
   public void create() {
-    if (!AdvancedBan.plugin.getDataFolder().exists()) {
-      AdvancedBan.plugin.getDataFolder().mkdir();
-      new File(AdvancedBan.plugin.getDataFolder() + "/messages").mkdir();
+    if (!AdvancedBanBungee.plugin.getDataFolder().exists()) {
+      AdvancedBanBungee.plugin.getDataFolder().mkdir();
+      new File(AdvancedBanBungee.plugin.getDataFolder() + "/messages").mkdir();
     }
     try {
       if (!file.exists()) {
         Files.copy(
-            Objects.requireNonNull(AdvancedBan.plugin.getResourceAsStream(filename)),
+            Objects.requireNonNull(AdvancedBanBungee.plugin.getResourceAsStream(filename)),
             file.toPath());
       }
       cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);

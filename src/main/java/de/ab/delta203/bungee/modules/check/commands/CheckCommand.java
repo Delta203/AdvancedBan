@@ -1,9 +1,9 @@
 package de.ab.delta203.bungee.modules.check.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.ban.mysql.BanHandler;
+import de.ab.delta203.core.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -25,11 +25,11 @@ public class CheckCommand extends Command {
 
   @Override
   public void execute(CommandSender sender, String[] args) {
+    if (!sender.hasPermission("ab.check")) {
+      sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
+      return;
+    }
     if (args.length == 1) {
-      if (!sender.hasPermission("ab.check")) {
-        sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
-        return;
-      }
       String name = args[0];
       String uuidCached = playerInfoHandler.getUUID(name);
       String uuid = uuidCached == null ? "-" : uuidCached;
@@ -43,38 +43,38 @@ public class CheckCommand extends Command {
         ip = target.getSocketAddress().toString();
         server = target.getServer().getInfo().getName();
       }
-      String prefixTrue = AdvancedBan.messages.getString("check.prefix.true");
-      String prefixFalse = AdvancedBan.messages.getString("check.prefix.false");
+      String prefixTrue = (String) AdvancedBan.messages.get("check.prefix.true");
+      String prefixFalse = (String) AdvancedBan.messages.get("check.prefix.false");
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("check.title").replace("%player%", name)));
+                  + ((String) AdvancedBan.messages.get("check.title")).replace("%player%", name)));
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("check.uuid").replace("%uuid%", uuid)));
-      sender.sendMessage(
-          new TextComponent(
-              AdvancedBan.prefix + AdvancedBan.messages.getString("check.ip").replace("%ip%", ip)));
+                  + ((String) AdvancedBan.messages.get("check.uuid")).replace("%uuid%", uuid)));
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("check.server").replace("%server%", server)));
+                  + ((String) AdvancedBan.messages.get("check.ip")).replace("%ip%", ip)));
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("check.banned")
+                  + ((String) AdvancedBan.messages.get("check.server"))
+                      .replace("%server%", server)));
+      sender.sendMessage(
+          new TextComponent(
+              AdvancedBan.prefix
+                  + ((String) AdvancedBan.messages.get("check.banned"))
                       .replace("%banned%", (banned ? prefixTrue : prefixFalse) + banned)));
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("check.muted")
+                  + ((String) AdvancedBan.messages.get("check.muted"))
                       .replace("%muted%", (muted ? prefixTrue : prefixFalse) + muted)));
     } else {
       sender.sendMessage(
-          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("check.help")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("check.help")));
     }
   }
 }

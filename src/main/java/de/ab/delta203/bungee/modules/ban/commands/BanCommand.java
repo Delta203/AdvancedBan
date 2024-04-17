@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.ban.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.ban.mysql.BanHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,7 +23,7 @@ public class BanCommand extends Command {
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (!sender.hasPermission("ab.ban")) {
-      sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
+      sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
       return;
     }
     if (args.length >= 2) {
@@ -33,14 +33,14 @@ public class BanCommand extends Command {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
+                    + ((String) AdvancedBan.messages.get("not_registered"))
+                        .replace("%player%", name)));
         return;
       }
-      if (!AdvancedBan.config.getBoolean("self")) {
+      if (!(boolean) AdvancedBan.config.get("self")) {
         if (sender.getName().equals(name)) {
           sender.sendMessage(
-              new TextComponent(
-                  AdvancedBan.prefix + AdvancedBan.messages.getString("ban.not_yourself")));
+              new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("ban.not_yourself")));
           return;
         }
       }
@@ -48,8 +48,7 @@ public class BanCommand extends Command {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages
-                        .getString("ban.already_banned")
+                    + ((String) AdvancedBan.messages.get("ban.already_banned"))
                         .replace("%player%", name)));
         return;
       }
@@ -58,8 +57,8 @@ public class BanCommand extends Command {
       for (int i = 1; i < args.length; i++) {
         reason.append(args[i]).append(" ");
       }
-      String senderUUID = AdvancedBan.config.getString("console");
-      String senderDName = AdvancedBan.config.getString("console");
+      String senderUUID = (String) AdvancedBan.config.get("console");
+      String senderDName = (String) AdvancedBan.config.get("console");
       if (sender instanceof ProxiedPlayer p) {
         senderUUID = p.getUniqueId().toString();
         senderDName = p.getDisplayName();
@@ -70,8 +69,7 @@ public class BanCommand extends Command {
         ip = target.getSocketAddress().toString().split(":")[0];
         target.disconnect(
             new TextComponent(
-                AdvancedBan.messages
-                    .getString("ban.message.kick")
+                ((String) AdvancedBan.messages.get("ban.message.kick"))
                     .replace("%reason%", reason)
                     .replace("\\n", "\n")));
       }
@@ -80,27 +78,29 @@ public class BanCommand extends Command {
           uuid,
           senderUUID,
           "ban",
-          AdvancedBan.messages.getString("unit.permanent.name"),
+          (String) AdvancedBan.messages.get("unit.permanent.name"),
           reason.toString());
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("ban.success.ban").replace("%player%", name)));
+                  + ((String) AdvancedBan.messages.get("ban.success.ban"))
+                      .replace("%player%", name)));
       // broadcast
       TextComponent textComponent =
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages
-                      .getString("ban.notification")
+                  + ((String) AdvancedBan.messages.get("ban.notification"))
                       .replace("%player%", name)
                       .replace("%from%", sender.getName())
                       .replace("%fromDN%", senderDName)
                       .replace("%reason%", reason)
-                      .replace("%duration%", AdvancedBan.messages.getString("unit.permanent.name"))
+                      .replace(
+                          "%duration%", (String) AdvancedBan.messages.get("unit.permanent.name"))
                       .replace("\\n", "\n"));
       for (ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
         if (all.hasPermission("ab.ban") || all.hasPermission("ab.tempban")) {
-          if (playerInfoHandler.hasNotify(all, PlayerInfoHandler.Notification.BAN)) {
+          if (playerInfoHandler.hasNotify(
+              all.getUniqueId().toString(), PlayerInfoHandler.Notification.BAN)) {
             if (all == target) continue;
             all.sendMessage(textComponent);
           }
@@ -108,7 +108,7 @@ public class BanCommand extends Command {
       }
     } else {
       sender.sendMessage(
-          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("ban.help.ban")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("ban.help.ban")));
     }
   }
 }

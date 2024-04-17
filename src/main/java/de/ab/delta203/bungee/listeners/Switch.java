@@ -1,6 +1,6 @@
 package de.ab.delta203.bungee.listeners;
 
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -17,6 +17,6 @@ public class Switch extends PlayerInfoHandler implements Listener {
   @EventHandler
   public void onSwitch(ServerSwitchEvent e) {
     ProxiedPlayer p = e.getPlayer();
-    updateServer(p);
+    updateServer(p.getUniqueId().toString(), p.getServer().getInfo().getName());
   }
 }

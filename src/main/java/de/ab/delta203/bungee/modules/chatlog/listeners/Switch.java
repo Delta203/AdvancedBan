@@ -1,7 +1,7 @@
 package de.ab.delta203.bungee.modules.chatlog.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.chatlog.mysql.LogHandler;
+import de.ab.delta203.core.modules.chatlog.mysql.LogHandler;
+import de.ab.delta203.core.AdvancedBan;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -20,11 +20,11 @@ public class Switch extends LogHandler implements Listener {
     ProxiedPlayer p = e.getPlayer();
     if (e.getFrom() != null) {
       String disconnect =
-          AdvancedBan.config.getString("chatlog.disconnect").replace("%player%", p.getName());
-      record(p, disconnect);
+          ((String) AdvancedBan.config.get("chatlog.disconnect")).replace("%player%", p.getName());
+      record(p.getUniqueId().toString(), p.getServer().getInfo().getName(), disconnect);
     }
     String connect =
-        AdvancedBan.config.getString("chatlog.connect").replace("%player%", p.getName());
-    record(p, connect);
+        ((String) AdvancedBan.config.get("chatlog.connect")).replace("%player%", p.getName());
+    record(p.getUniqueId().toString(), p.getServer().getInfo().getName(), connect);
   }
 }

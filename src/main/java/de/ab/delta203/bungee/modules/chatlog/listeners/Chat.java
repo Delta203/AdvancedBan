@@ -1,7 +1,7 @@
 package de.ab.delta203.bungee.modules.chatlog.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.chatlog.mysql.LogHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.chatlog.mysql.LogHandler;
 import java.sql.Connection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -20,12 +20,13 @@ public class Chat extends LogHandler implements Listener {
       String message = e.getMessage();
       if (message.startsWith("/")) {
         message = message.replace("<", "&#60;").replace(">", "&#62");
-        message = AdvancedBan.config.getString("chatlog.command").replace("%command%", message);
-        record(p, message);
+        message =
+            ((String) AdvancedBan.config.get("chatlog.command")).replace("%command%", message);
+        record(p.getUniqueId().toString(), p.getServer().getInfo().getName(), message);
       } else {
         if (!isMuted(p.getUniqueId().toString())) {
           message = message.replace("<", "&#60;").replace(">", "&#62");
-          record(p, message);
+          record(p.getUniqueId().toString(), p.getServer().getInfo().getName(), message);
         }
       }
     }

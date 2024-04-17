@@ -1,6 +1,6 @@
 package de.ab.delta203.bungee.listeners;
 
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import java.sql.Connection;
 import net.md_5.bungee.api.connection.PendingConnection;
 import net.md_5.bungee.api.event.LoginEvent;
@@ -16,12 +16,12 @@ public class Login extends PlayerInfoHandler implements Listener {
   @EventHandler
   public void onLogin(LoginEvent e) {
     PendingConnection pc = e.getConnection();
-    if (!registered(pc)) {
-      register(pc);
+    if (!registered(pc.getUniqueId().toString())) {
+      register(pc.getUniqueId().toString(), pc.getName());
     }
     if (!getName(pc.getUniqueId().toString()).equals(pc.getName())) {
       updateName(pc.getUniqueId().toString(), pc.getName());
     }
-    updateLoginKey(pc);
+    updateLoginKey(pc.getUniqueId().toString(), pc.getName());
   }
 }

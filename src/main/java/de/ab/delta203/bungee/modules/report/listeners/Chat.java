@@ -1,10 +1,11 @@
 package de.ab.delta203.bungee.modules.report.listeners;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.mute.mysql.MuteHandler;
-import de.ab.delta203.bungee.modules.report.mysql.ReportHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.mute.mysql.MuteHandler;
+import de.ab.delta203.core.modules.report.mysql.ReportHandler;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -27,19 +28,21 @@ public class Chat extends ReportHandler implements Listener {
     lastMessageTime = new HashMap<>();
     lastMessageString = new HashMap<>();
     last2MessageString = new HashMap<>();
-    interval = AdvancedBan.config.getInt("chatlog.autoreport.spam.interval");
+    interval = (int) AdvancedBan.config.get("chatlog.autoreport.spam.interval");
   }
 
   @EventHandler
   public void onChat(ChatEvent e) {
     if (e.getSender() instanceof ProxiedPlayer p) {
       String message = e.getMessage();
+      if (message.startsWith("/")) return;
       if (p.hasPermission("ab.cantbereported")) return;
-      if (!AdvancedBan.config.getBoolean("chatlog.autoreport.enabled")) return;
+      if (!(boolean) AdvancedBan.config.get("chatlog.autoreport.enabled")) return;
       if (muteHandler.isMuted(p.getUniqueId().toString())) return;
-      if (alreadyReported(p, AdvancedBan.config.getString("console"))) return;
+      if (alreadyReported(p.getUniqueId().toString(), (String) AdvancedBan.config.get("console")))
+        return;
       // domains
-      for (String domain : AdvancedBan.chatFilter.getStringList("domains")) {
+      for (Object domain : (List<?>) AdvancedBan.chatFilter.get("domains")) {
         String pattern = ".*[^\\s]\\." + domain + ".*";
         if (Pattern.matches(pattern, message)) {
           report(p.getName());
@@ -47,14 +50,14 @@ public class Chat extends ReportHandler implements Listener {
         }
       }
       // insults
-      for (String word : AdvancedBan.chatFilter.getStringList("insults")) {
-        if (message.contains(word)) {
+      for (Object word : (List<?>) AdvancedBan.chatFilter.get("insults")) {
+        if (message.contains((String) word)) {
           report(p.getName());
           return;
         }
       }
       // spamming
-      if (!AdvancedBan.config.getBoolean("chatlog.autoreport.spam.enabled")) return;
+      if (!(boolean) AdvancedBan.config.get("chatlog.autoreport.spam.enabled")) return;
       if (isSpamming(p, message)) {
         report(p.getName());
       }
@@ -62,7 +65,7 @@ public class Chat extends ReportHandler implements Listener {
   }
 
   private void report(String name) {
-    String reason = AdvancedBan.config.getString("chatlog.autoreport.reason");
+    String reason = (String) AdvancedBan.config.get("chatlog.autoreport.reason");
     ProxyServer.getInstance()
         .getPluginManager()
         .dispatchCommand(ProxyServer.getInstance().getConsole(), "report " + name + " " + reason);

@@ -16,11 +16,13 @@ $reason = $report["Reason"];
   <div class="row">
     <div class="col-md-8">
       <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item">
-          <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=jump&player=" . $uuid . "&server=" . $server); ?>">
-            <?php echo($messages_report_jump); ?>
-          </a>
-        </li>
+        <?php if ($session_uuid != $admin_uuid) { ?>
+          <li class="nav-item">
+            <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=jump&player=" . $uuid . "&server=" . $server); ?>">
+              <?php echo($messages_report_jump); ?>
+            </a>
+          </li>
+        <?php } ?>
         <li class="nav-item">
           <a class="nav-link text-body-secondary" href="<?php echo($root . "/?p=closeReport&player=" . $uuid); ?>">
             <?php echo($messages_report_close); ?>

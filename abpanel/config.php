@@ -2,6 +2,11 @@
 $root = "http://localhost/abpanel";
 $https_redirect = false;
 
+# Server types:
+#   BUNGEECORD
+#   SPIGOT
+$server_type = "SPIGOT";
+
 # Languages supported:
 #   EN    | English
 #   DE    | German
@@ -13,7 +18,7 @@ $mysql_username = "root";
 $mysql_password = "";
 
 # Admin session
-# Make sure $admin_uuid equals console name from bungeecord plugin config.
+# Make sure $admin_uuid equals console name from server plugin config.
 $admin_enabled = true;
 $admin_uuid = "Console";
 $admin_key = "key";

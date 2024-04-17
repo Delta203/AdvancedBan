@@ -1,6 +1,6 @@
 package de.ab.delta203.bungee.listeners;
 
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -17,7 +17,7 @@ public class Disconnect extends PlayerInfoHandler implements Listener {
   @EventHandler
   public void onDisconnect(PlayerDisconnectEvent e) {
     ProxiedPlayer p = e.getPlayer();
-    removeServer(p);
+    removeServer(p.getUniqueId().toString());
     removeLoginKey(p.getUniqueId().toString());
   }
 }

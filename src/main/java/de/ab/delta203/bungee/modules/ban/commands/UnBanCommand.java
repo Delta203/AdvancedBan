@@ -1,8 +1,8 @@
 package de.ab.delta203.bungee.modules.ban.commands;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.ban.mysql.BanHandler;
-import de.ab.delta203.bungee.mysql.PlayerInfoHandler;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.ban.mysql.BanHandler;
+import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -22,7 +22,7 @@ public class UnBanCommand extends Command {
   @Override
   public void execute(CommandSender sender, String[] args) {
     if (!sender.hasPermission("ab.unban")) {
-      sender.sendMessage(new TextComponent(AdvancedBan.messages.getString("no_permission")));
+      sender.sendMessage(new TextComponent((String) AdvancedBan.messages.get("no_permission")));
       return;
     }
     if (args.length == 1) {
@@ -32,18 +32,20 @@ public class UnBanCommand extends Command {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("not_registered").replace("%player%", name)));
+                    + ((String) AdvancedBan.messages.get("not_registered"))
+                        .replace("%player%", name)));
         return;
       }
       if (!banHandler.isBanned(uuid)) {
         sender.sendMessage(
             new TextComponent(
                 AdvancedBan.prefix
-                    + AdvancedBan.messages.getString("ban.not_banned").replace("%player%", name)));
+                    + ((String) AdvancedBan.messages.get("ban.not_banned"))
+                        .replace("%player%", name)));
         return;
       }
       // valid
-      String senderUUID = AdvancedBan.config.getString("console");
+      String senderUUID = (String) AdvancedBan.config.get("console");
       if (sender instanceof ProxiedPlayer p) {
         senderUUID = p.getUniqueId().toString();
       }
@@ -52,10 +54,11 @@ public class UnBanCommand extends Command {
       sender.sendMessage(
           new TextComponent(
               AdvancedBan.prefix
-                  + AdvancedBan.messages.getString("ban.success.unban").replace("%player%", name)));
+                  + ((String) AdvancedBan.messages.get("ban.success.unban"))
+                      .replace("%player%", name)));
     } else {
       sender.sendMessage(
-          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("ban.help.unban")));
+          new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("ban.help.unban")));
     }
   }
 }

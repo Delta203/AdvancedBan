@@ -1,7 +1,8 @@
 package de.ab.delta203.bungee.modules.query;
 
-import de.ab.delta203.bungee.AdvancedBan;
-import de.ab.delta203.bungee.modules.query.mysql.QueryHandler;
+import de.ab.delta203.bungee.AdvancedBanBungee;
+import de.ab.delta203.core.AdvancedBan;
+import de.ab.delta203.core.modules.query.mysql.QueryHandler;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -21,11 +22,11 @@ public class Query extends QueryHandler {
     ProxyServer.getInstance()
         .getConsole()
         .sendMessage(
-            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.getString("loaded.query")));
+            new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("loaded.query")));
     ProxyServer.getInstance()
         .getScheduler()
         .schedule(
-            AdvancedBan.plugin,
+            AdvancedBanBungee.plugin,
             () -> {
               ArrayList<String> commands = getCommands();
               for (String commandRaw : commands) {
@@ -33,7 +34,7 @@ public class Query extends QueryHandler {
                 String senderUUID = commandArray[0];
                 String command = commandArray[1];
                 CommandSender commandSender;
-                if (senderUUID.equals(AdvancedBan.config.getString("console"))) {
+                if (senderUUID.equals(AdvancedBan.config.get("console"))) {
                   commandSender = ProxyServer.getInstance().getConsole();
                 } else {
                   UUID uuid;
@@ -52,7 +53,7 @@ public class Query extends QueryHandler {
               }
             },
             0,
-            AdvancedBan.config.getInt("query"),
+            (int) AdvancedBan.config.get("query"),
             TimeUnit.SECONDS);
   }
 
