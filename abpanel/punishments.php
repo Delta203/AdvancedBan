@@ -7,7 +7,7 @@ $punishments_mute = array();
 #   $punishments_ban  | Ban reasons
 #   $punishments_mute | Mute reasons
 # Placeholders:
-#   %player%    | Player name
+#   %player% | Player name
 $punishments_ban["Hacking"] = "ban %player% Hacking";
 $punishments_ban["Bugusing"] = "tempban %player% 7 day Bugusing";
 $punishments_ban["Teaming"] = "tempban %player% 1 day Teaming";
