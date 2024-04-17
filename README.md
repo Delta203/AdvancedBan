@@ -9,8 +9,9 @@ Comprehensive ban, mute and report system with web panel.
 - HTTP Server (Apache)
 
 ## Installation:
-1. Setup **bungeecord**
-2. Setup **web panel**
+1. Unzip .zip file
+2. Setup **bungeecord**
+3. Setup **web panel**
 ### Bungeecord:
 1. Put the .jar file into your plugins folder.
 2. Start your server and stop it after the configuration files have been created.
