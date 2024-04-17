@@ -13,6 +13,7 @@ $mysql_username = "root";
 $mysql_password = "";
 
 # Admin session
+# Make sure $admin_uuid equals console name from bungeecord plugin config.
 $admin_enabled = true;
 $admin_uuid = "Console";
 $admin_key = "key";
