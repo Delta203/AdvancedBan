@@ -89,7 +89,7 @@ $offset = ($page-1) * $max_historylist;
           <?php echo($messages_check_banned . " "); if ($isBanned) { echo("<b class='text-danger'>true</b>"); } else {
             echo("<b class='text-success'>false</b>"); } ?><br>
           <?php echo($messages_check_muted . " "); if ($isMuted) { echo("<b class='text-danger'>true</b>"); } else {
-            echo("<b class='text-success'>false</b>"); } ?><br>
+            echo("<b class='text-success'>false</b>"); } ?>
         </p>
       </div>
 
