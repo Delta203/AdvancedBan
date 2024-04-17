@@ -11,6 +11,6 @@ main: de.ab.delta203.bungee.AdvancedBan
 # - ab.mute
 # - ab.tempmute
 # - ab.unmute
-# - ab.cantbereported
 # - ab.check
 # - ab.panel
+# - ab.cantbereported

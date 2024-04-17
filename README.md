@@ -16,7 +16,7 @@ Comprehensive ban, mute and report system with web panel.
 2. Start your server and stop it after the configuration files have been created.
 3. Insert mysql connection data into `config.yml`.
 4. Run your server -> **done**
-### Web Panel
+### Web Panel:
 1. Put the abpanel folder into your root directory.
 2. Open the `config.php` file and insert your mysql connection data.
 3. Restart your web server -> **done**
@@ -51,8 +51,8 @@ key = md5(key);
 - ab.mute (Usage: /mute)
 - ab.tempmute (Usage: /tempmute)
 - ab.unmute (Usage: /unmute)
-- ab.cantbereported (Player can not be reported)
 - ab.check (Usage: /check)
 - ab.panel (Usage: /abpanel)
+- ab.cantbereported (Player can not be reported)
 
 ## Download:
