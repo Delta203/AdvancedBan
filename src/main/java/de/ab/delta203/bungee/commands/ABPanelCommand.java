@@ -1,6 +1,5 @@
 package de.ab.delta203.bungee.commands;
 
-import de.ab.delta203.bungee.AdvancedBanBungee;
 import de.ab.delta203.core.AdvancedBan;
 import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import net.md_5.bungee.api.CommandSender;
