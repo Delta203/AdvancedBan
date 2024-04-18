@@ -51,7 +51,7 @@ public class Chat extends ReportHandler implements Listener {
       }
       // insults
       for (Object word : (List<?>) AdvancedBan.chatFilter.get("insults")) {
-        if (message.contains((String) word)) {
+        if (message.toLowerCase().contains((String) word)) {
           report(p.getName());
           return;
         }
