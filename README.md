@@ -60,3 +60,4 @@ key = md5(key);
 - ab.cantbereported (Player can not be reported)
 
 ## Download:
+[https://www.spigotmc.org/resources/advanced-ban-mysql-webpanel.104394/](https://www.spigotmc.org/resources/advanced-ban-mysql-webpanel.104394/)
