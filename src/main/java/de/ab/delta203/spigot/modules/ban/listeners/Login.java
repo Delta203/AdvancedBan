@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.sql.Connection;
-import java.util.Objects;
 
 public class Login extends BanHandler implements Listener {
 
@@ -42,6 +41,7 @@ public class Login extends BanHandler implements Listener {
       unban(uuid);
       log(uuid, "-", "unban", "-", "-");
     }
+    if (!(boolean) AdvancedBan.config.get("ip_bans")) return;
     if (isBannedIp(ip)) {
       playerInfoHandler.removeLoginKey(uuid);
       e.setResult(PlayerLoginEvent.Result.KICK_OTHER);

@@ -43,6 +43,7 @@ public class Login extends BanHandler implements Listener {
       unban(uuid);
       log(uuid, "-", "unban", "-", "-");
     }
+    if (!(boolean) AdvancedBan.config.get("ip_bans")) return;
     if (isBannedIp(ip)) {
       playerInfoHandler.removeLoginKey(uuid);
       e.setCancelled(true);
