@@ -7,6 +7,7 @@ import de.ab.delta203.core.mysql.PlayerInfoHandler;
 import de.ab.delta203.spigot.commands.*;
 import de.ab.delta203.spigot.files.FileManager;
 import de.ab.delta203.spigot.listeners.Disconnect;
+import de.ab.delta203.spigot.listeners.Join;
 import de.ab.delta203.spigot.listeners.Login;
 import de.ab.delta203.spigot.listeners.Teleport;
 import de.ab.delta203.spigot.modules.ban.Ban;
@@ -47,6 +48,7 @@ public class AdvancedBanSpigot extends JavaPlugin {
     playerInfoHandler.resetLoginKeys();
 
     Bukkit.getPluginManager().registerEvents(new Disconnect(AdvancedBan.mysql.connection), this);
+    Bukkit.getPluginManager().registerEvents(new Join(AdvancedBan.mysql.connection), this);
     Bukkit.getPluginManager().registerEvents(new Login(AdvancedBan.mysql.connection), this);
     Bukkit.getPluginManager().registerEvents(new Teleport(AdvancedBan.mysql.connection), this);
     Objects.requireNonNull(getCommand("advancedban")).setExecutor(new MainCommand());
