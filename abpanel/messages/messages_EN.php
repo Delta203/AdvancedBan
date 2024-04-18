@@ -78,7 +78,7 @@ $messages_check_registered = "Registered: <b>%date%</b>";
 $messages_check_server = "Server: <b>%server%</b>";
 $messages_check_banned = "Banned:";
 $messages_check_muted = "Muted:";
-$messages_check_ban_mute = "Ban & Mute Verlauf";
+$messages_check_ban_mute = "Ban & Mute History";
 $messages_check_ban_mute_bans = "Bans: <b>%bans%</b>";
 $messages_check_ban_mute_mutes = "Mutes: <b>%mutes%</b>";
 
