@@ -18,6 +18,7 @@ public class Disconnect extends LogHandler implements Listener {
   @EventHandler
   public void onDisconnect(PlayerDisconnectEvent e) {
     ProxiedPlayer p = e.getPlayer();
+    if (p.getServer() == null) return;
     String disconnect =
         ((String) AdvancedBan.config.get("chatlog.disconnect")).replace("%player%", p.getName());
     record(p.getUniqueId().toString(), p.getServer().getInfo().getName(), disconnect);
