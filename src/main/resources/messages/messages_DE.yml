@@ -152,7 +152,7 @@ ban:
   message:
     kick: '§cDu wurdest gebannt.\n§cGrund§7: §6%reason%'
     login: '§cDu wurdest gebannt.\n\n§cGrund§7: §6%reason%\n§cDauer§7: §6%duration%'
-    ipban: '§cDu wurdest gebannt.\n\n§cGrund§7: §6Mit anderem Konto gebannt\n§cDauer§7: §4DAUERHAFT'
+    ipban: '§cDu wurdest gebannt.\n\n§cGrund§7: §6Mit anderem Account gebannt\n§cDauer§7: §4DAUERHAFT'
   not_yourself: '§cDu kannst dich nicht selbst bannen!'
   already_banned: '§cDer Spieler §e%player% §cist bereits gebannt.'
   not_banned: '§cDer Spieler §e%player% §cist nicht gebannt.'
