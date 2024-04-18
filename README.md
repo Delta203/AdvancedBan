@@ -15,11 +15,13 @@ Comprehensive ban, mute and report system with web panel.
 ### Server (Bungeecord / Spigot):
 1. Put the .jar file into your plugins folder.
 2. Start your server and stop it after the configuration files have been created.
-3. Insert mysql connection data into `config.yml`.
+3. Insert MySQl connection data into `config.yml`.
 4. Run your server -> **done**
 ### Web Panel:
 1. Put the abpanel folder into your root directory.
-2. Open the `config.php` file and insert your mysql connection data.
+2. Open and setup the `config.php` file.
+   - Set `$server_type` to the type you are using.
+   - Insert your MySQl connection data.
 3. Restart your web server -> **done**
 
 ## Functions:
