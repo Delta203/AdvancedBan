@@ -19,7 +19,7 @@ Comprehensive ban, mute and report system with web panel.
 4. Run your server -> **done**
 ### Web Panel:
 1. Put the abpanel folder into your root directory.
-2. Open and setup the `config.php` file.
+2. Open and set up the `config.php` file.
    - Set `$server_type` to the type you are using.
    - Insert your MySQl connection data.
 3. Restart your web server -> **done**
