@@ -34,7 +34,17 @@ public class AdvancedBanBungee extends Plugin {
     plugin = this;
     AdvancedBan.serverType = ServerType.BUNGEECORD;
     initConfigs();
-    initMySQl();
+    if (!initMySQl()) {
+      ProxyServer.getInstance()
+          .getConsole()
+          .sendMessage(
+              new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("mysql.invalid")));
+      ProxyServer.getInstance()
+          .getConsole()
+          .sendMessage(
+              new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("loaded.invalid")));
+      return;
+    }
 
     playerInfoHandler = new PlayerInfoHandler(AdvancedBan.mysql.connection);
     playerInfoHandler.resetServers();
@@ -134,23 +144,26 @@ public class AdvancedBanBungee extends Plugin {
             new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("loaded.files")));
   }
 
-  private void initMySQl() {
+  private boolean initMySQl() {
     String host = (String) AdvancedBan.config.get("mysql.host");
     int port = (int) AdvancedBan.config.get("mysql.port");
     String database = (String) AdvancedBan.config.get("mysql.database");
     String user = (String) AdvancedBan.config.get("mysql.user");
     String password = (String) AdvancedBan.config.get("mysql.password");
     AdvancedBan.mysql = new MySQlManager(host, port, database, user, password);
-    if (AdvancedBan.mysql.connect())
+    if (AdvancedBan.mysql.connect()) {
       ProxyServer.getInstance()
           .getConsole()
           .sendMessage(
               new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("mysql.connected")));
-    if (AdvancedBan.mysql.createTable())
-      ProxyServer.getInstance()
-          .getConsole()
-          .sendMessage(
-              new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("mysql.tables")));
+      if (AdvancedBan.mysql.createTable())
+        ProxyServer.getInstance()
+            .getConsole()
+            .sendMessage(
+                new TextComponent(AdvancedBan.prefix + AdvancedBan.messages.get("mysql.tables")));
+      return true;
+    }
+    return false;
   }
 
   private void getConfigKeysRecursive(String prefix, Configuration config, ArrayList<String> keys) {

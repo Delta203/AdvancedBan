@@ -7,11 +7,13 @@
 prefix: '§f[§cABan§f] §3'
 loaded:
   plugin: '§aPlugin erfolgreich geladen. §7(§e%type%§7)'
+  invalid: '§4Plugin wurde nicht geladen!'
   files: 'Config Dateien erfolgreich geladen.'
   query: 'Command Query gestartet.'
 mysql:
   connected: 'MySQl Verbindung erfolgreich hergestellt.'
   tables: 'MySQl Tabellen erfolgreich erstellt.'
+  invalid: '§cMySQl Verbindung konnte nicht hergestellt werden!'
 
 # Universal
 # Placeholders:

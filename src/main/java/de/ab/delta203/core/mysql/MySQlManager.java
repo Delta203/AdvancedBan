@@ -60,7 +60,6 @@ public class MySQlManager {
               password);
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
     }
     return false;
   }
