@@ -8,4 +8,5 @@
 ## Modules
 ### Report
 ### Chatlog
+# Core
 # Web Panel
