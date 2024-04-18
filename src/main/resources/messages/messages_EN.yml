@@ -1,0 +1,181 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord & Spigot
+
+# Placeholders:
+#   %type%  | Server type
+prefix: '§f[§cABan§f] §3'
+loaded:
+  plugin: '§aPlugin successfully loaded. §7(§e%type%§7)'
+  invalid: '§4Plugin not loaded!'
+  files: 'Config files successfully loaded.'
+  query: 'Command query has started.'
+mysql:
+  connected: 'MySQl connection successful established.'
+  tables: 'MySQl tables successfully created.'
+  invalid: '§cMySQl connection cannot be established!'
+
+# Universal
+# Placeholders:
+#   %player%    | Player name
+no_permission: '§cYou do not have permission to execute this command!'
+not_online: '§cThe player §e%player% §cis not online.'
+not_registered: '§cThe player §e%player% §cis not registered.'
+help:
+  title: 'Ban and mute system information'
+  notify:
+    ban: '§b/togglebannotify §7Toggle ban notifications'
+    mute: '§b/togglemutenotify §7Toggle mute notifications'
+    report: '§b/togglereportnotify §7Toggle report notifications'
+  ban: '§b/ban <name> §7Ban a player'
+  tempban: '§b/tempban <name> §7Ban a player temporarily'
+  unban: '§b/unban <name> §7Unban a player'
+  mute: '§b/mute <name> §7Mute a player'
+  tempmute: '§b/tempmute <name> §7Mute a player temporarily'
+  unmute: '§b/unmute <name> §7Unmute a player'
+  check: '§b/check <name> §7Check a player'
+  panel: '§b/abpanel §7Open the link to the web panel'
+abpanel:
+  title: 'Click §8[§ahere§8] §3to open the web panel.'
+  hover: '§aOpen web panel'
+
+# Toggle notification
+toggle:
+  ban:
+    enabled: '§aYou have enabled ban notifications.'
+    disabled: '§cYou have disabled ban notifications!'
+  mute:
+    enabled: '§aYou have enabled mute notifications.'
+    disabled: '§cYou have disabled mute notifications!'
+  report:
+    enabled: '§aYou have enabled report notifications.'
+    disabled: '§cYou have disabled report notifications!'
+
+# Time units
+# Placeholders
+#   %sec%    | Seconds
+#   %min%    | Minutes
+#   %hour%   | Hours
+#   %day%    | Days
+unit:
+  seconds:
+    name: 'Second(s)'
+    alias: 'sec'
+  minutes:
+    name: 'Minute(s)'
+    alias: 'min'
+  hours:
+    name: 'Hour(s)'
+    alias: 'hour'
+  days:
+    name: 'Day(s)'
+    alias: 'day'
+  permanent:
+    name: '§4PERMANENT'
+  to_big: '§cThe unit value is to big!'
+  not_a_number: '§cThe unit value is not a number.'
+  invalid_value: '§cThe unit value is invalid.'
+  invalid_unit: '§cThe unit must be %sec%, %min%, %hour%, %day%!'
+
+# Report
+# Placeholders:
+#   %player%    | Player name
+#   %reason%    | Reason
+#   %reports%   | Amount of open reports
+#   %server%    | Server
+report:
+  help: '§cUsage: /report <name>'
+  notification:
+    open: '§4There are currently §c%reports% §4open reports!'
+    new: 
+      title: '§cThe player §6%player% §chas been reported!\n§f[§cABan§f] §cReason: %reason% §7| §cServer: '
+      server: '§8[§a%server%§8]'
+      hover: '§aConnect to server'
+  reasons:
+    - 'Hacking'
+    - 'Chat'
+    - 'Bugusing'
+    - 'Teaming'
+    - 'Building'
+    - 'Trolling'
+    - 'Skin'
+    - 'Name'
+  not_yourself: '§cYou can not report yourself!'
+  cant_be_reported: '§cYou can not report §e%player%§c.'
+  already_reported: '§cYou have already reported §e%player%§c.'
+  invalid_reason: '§cThis reason does not exist!'
+  reporting:
+    title: 'Report the player §e%player%'
+    reason: '§8[§b%reason%§8] '
+    hover: '§3Click to report §e%player%'
+  confirm:
+    info: 'You want to report §e%player%§3 for %reason%. Please confirm your report and note that incorrect reports will have consequences. '
+    confirm: '§8[§a§lConfirm§8]'
+    hover: '§aConfirm reporting §e%player%'
+  cant_be_confirmed: '§cYou can not confirm this report!'
+  confirmed: '§aYou have successfully reported §e%player%§a. Thank you for your support!'
+  
+# Temp/-Mute
+# Placeholders
+#   %player%    | Player name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%    | Reason
+mute:
+  help:
+    tempmute: '§cUsage: /tempmute <name> <duration> <unit> <reason>'
+    mute: '§cUsage: /mute <name> <reason>'
+    unmute: '§cUsage: /unmute <name>'
+  notification: 'The player §b%player% §3was muted by §c%fromDN%§3!\n§f[§cABan§f] §3Reason: %reason%§7| §3Duration: §6%duration%'
+  message: '§cYou have been banned from the chat.\n§cReason§7: §6%reason%§cDuration§7: §6%duration%'
+  not_yourself: '§cYou can not mute yourself!'
+  already_muted: '§cThe player §e%player% §cis already muted.'
+  not_muted: '§cThe player §e%player% §cis not muted.'
+  success:
+    mute: '§aYou have successfully muted §e%player%§a!'
+    unmute: '§aYou have successfully unmuted §e%player%§a!'
+    
+# Temp/-Ban
+# Placeholders
+#   %player%    | Player name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%    | Reason
+ban:
+  help:
+    tempban: '§cUsage: /tempban <name> <duration> <unit> <reason>'
+    ban: '§cUsage: /ban <name> <reason>'
+    unban: '§cUsage: /unban <name>'
+  notification: 'The player §b%player% §3was banned by §c%fromDN%§3!\n§f[§cABan§f] §3Reason: %reason%§7| §3Duration: §6%duration%'
+  message:
+    kick: '§cYou have been banned.\n§cReason§7: §6%reason%'
+    login: '§cYou have been banned.\n\n§cReason§7: §6%reason%\n§cDuration§7: §6%duration%'
+    ipban: '§cYou have been banned.\n\n§cReason§7: §6Banned with other account\n§cDuration§7: §4PERMANENT'
+  not_yourself: '§cYou can not ban yourself!'
+  already_banned: '§cThe player §e%player% §cis already banned.'
+  not_banned: '§cThe player §e%player% §cis not banned.'
+  success:
+    ban: '§aYou have successfully banned §e%player%§a!'
+    unban: '§aYou have successfully unbanned §e%player%§a!'
+
+# Check
+# Placeholders
+#   %player%    | Player name
+#   %uuid%      | Player uuid
+#   %ip%        | Player ip address
+#   %server%    | Server
+#   %banned%    | Is banned
+#   %muted%     | Is muted
+check:
+  help: '§cUsage: /check <name>'
+  prefix:
+    true: '§c'
+    false: '§a'
+  title: 'Player data about §e%player%'
+  uuid: 'UUID: §b%uuid%'
+  ip: 'Socket Address: §b%ip%'
+  server: 'Server: §b%server%'
+  banned: 'Banned: %banned%'
+  muted: 'Muted: %muted%'

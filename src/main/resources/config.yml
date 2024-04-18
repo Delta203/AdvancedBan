@@ -1,0 +1,54 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord & Spigot
+
+# Languages supported:
+#   EN    | English
+#   DE    | German
+language: 'EN'
+
+mysql:
+  host: 'localhost'
+  port: 3306
+  database: 'test'
+  user: 'root'
+  password: ''
+
+# Console name
+console: 'Console'
+
+# Enable ip bans (Default: true)
+ip_bans: true
+
+# Max temp ban/mute value
+max: 730
+
+# Self interactions (Ban, Mute, Report)
+# Debug purpose (Default: false)
+self: false
+
+# Command query fetch every x seconds
+query: 10
+
+# Chat log
+# Placeholders:
+#   %player%    | Player name
+#   %command%   | Command
+chatlog:
+  connect: '<b>%player% joined the game</b>'
+  disconnect: '<b>%player% left the game</b>'
+  command: '<i>%command%</i>'
+  # Report reason has to be registered
+  # Interval how many identical messages per second. (500 equals 2 messages per second)
+  autoreport:
+    enabled: true
+    reason: 'Chat'
+    spam:
+      enabled: true
+      interval: 500
+
+# Advanced Ban panel
+# Placeholders:
+#   %uuid%    | Player uuid
+#   %key%     | Login key
+link: 'http://localhost/abpanel/?uuid=%uuid%&key=%key%'

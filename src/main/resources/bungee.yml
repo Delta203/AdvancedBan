@@ -1,0 +1,5 @@
+name: AdvancedBan
+version: 1.3
+author: Delta203
+
+main: de.ab.delta203.bungee.AdvancedBanBungee

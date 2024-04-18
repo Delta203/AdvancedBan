@@ -1,0 +1,181 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord & Spigot
+
+# Placeholders:
+#   %type%  | Server type
+prefix: '§f[§cABan§f] §3'
+loaded:
+  plugin: '§aPlugin erfolgreich geladen. §7(§e%type%§7)'
+  invalid: '§4Plugin wurde nicht geladen!'
+  files: 'Config Dateien erfolgreich geladen.'
+  query: 'Command Query gestartet.'
+mysql:
+  connected: 'MySQl Verbindung erfolgreich hergestellt.'
+  tables: 'MySQl Tabellen erfolgreich erstellt.'
+  invalid: '§cMySQl Verbindung konnte nicht hergestellt werden!'
+
+# Universal
+# Placeholders:
+#   %player%    | Player name
+no_permission: '§cYou do not have permission to execute this command!'
+not_online: '§cDer Spieler §e%player% §cist nicht online.'
+not_registered: '§cDer Spieler §e%player% §cist nicht registriert.'
+help:
+  title: 'Informationen zum Bann und Mute System'
+  notify:
+    ban: '§b/togglebannotify §7Bann Benachrichtigungen umschalten'
+    mute: '§b/togglemutenotify §7Mute Benachrichtigungen umschalten'
+    report: '§b/togglereportnotify §7Report Benachrichtigungen umschalten'
+  ban: '§b/ban <name> §7Einen Spieler bannen'
+  tempban: '§b/tempban <name> §7Einen Spieler temporär bannen'
+  unban: '§b/unban <name> §7Einen Spieler entbannen'
+  mute: '§b/mute <name> §7Einen Spieler stummschalten'
+  tempmute: '§b/tempmute <name> §7Einen Spieler temporär stummschalten'
+  unmute: '§b/unmute <name> §7Einen Spieler entstummen'
+  check: '§b/check <name> §7Einen Spieler überprüfen'
+  panel: '§b/abpanel §7Den Link zum Webpanel öffnen'
+abpanel:
+  title: 'Klicke §8[§ahier§8] §3um das Web Panel zu öffnen.'
+  hover: '§aÖffne das Web Panel'
+
+# Toggle notification
+toggle:
+  ban:
+    enabled: '§aDu hast Bann Benachrichtigungen aktiviert.'
+    disabled: '§cDu hast Bann Benachrichtigungen deaktiviert!'
+  mute:
+    enabled: '§aDu hast Mute Benachrichtigungen aktiviert.'
+    disabled: '§cDu hast Mute Benachrichtigungen deaktiviert!'
+  report:
+    enabled: '§aDu hast Report Benachrichtigungen aktiviert.'
+    disabled: '§cDu hast Report Benachrichtigungen deaktiviert!'
+
+# Time units
+# Placeholders
+#   %sec%    | Seconds
+#   %min%    | Minutes
+#   %hour%   | Hours
+#   %day%    | Days
+unit:
+  seconds:
+    name: 'Sekunde(n)'
+    alias: 'sek'
+  minutes:
+    name: 'Minute(n)'
+    alias: 'min'
+  hours:
+    name: 'Stunde(n)'
+    alias: 'std'
+  days:
+    name: 'Tag(e)'
+    alias: 'tag'
+  permanent:
+    name: '§4DAUERHAFT'
+  to_big: '§cDer Einheitswert ist zu groß!'
+  not_a_number: '§cDer Einheitswert ist keine Zahl.'
+  invalid_value: '§cDer Einheitswert ist ungültig.'
+  invalid_unit: '§cDie Einheit muss %sec%, %min%, %hour%, %day% sein!'
+
+# Report
+# Placeholders:
+#   %player%    | Player name
+#   %reason%    | Reason
+#   %reports%   | Amount of open reports
+#   %server%    | Server
+report:
+  help: '§cUsage: /report <name>'
+  notification:
+    open: '§4Es gibt derzeit §c%reports% §4offene Reports!'
+    new:
+      title: '§cDer Spieler §6%player% §cwurde gemeldet!\n§f[§cABan§f] §cGrund: %reason% §7| §cServer: '
+      server: '§8[§a%server%§8]'
+      hover: '§aMit dem Server verbinden'
+  reasons:
+    - 'Hacking'
+    - 'Chat'
+    - 'Bugusing'
+    - 'Teaming'
+    - 'Building'
+    - 'Trolling'
+    - 'Skin'
+    - 'Name'
+  not_yourself: '§cDu kannst dich nicht selbst melden!'
+  cant_be_reported: '§cDu kannst §e%player%§c nicht melden.'
+  already_reported: '§cDu hast §e%player%§c bereits gemeldet.'
+  invalid_reason: '§cDieser Grund existiert nicht!'
+  reporting:
+    title: 'Melde den Spieler §e%player%'
+    reason: '§8[§b%reason%§8] '
+    hover: '§3Klicke, um den Spieler §e%player% §3zu melden'
+  confirm:
+    info: 'Möchtest du §e%player%§3 für %reason% melden? Bitte bestätige deinen Bericht und beachte, dass falsche Reports Konsequenzen haben können. '
+    confirm: '§8[§a§lBestätigen§8]'
+    hover: '§aMelden von §e%player% §abestätigen'
+  cant_be_confirmed: '§cDu kannst diesen Bericht nicht bestätigen!'
+  confirmed: '§aDu hast §e%player%§a erfolgreich gemeldet. Vielen Dank für deine Unterstützung!'
+
+# Temp/-Mute
+# Placeholders
+#   %player%    | Player name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%    | Reason
+mute:
+  help:
+    tempmute: '§cVerwendung: /tempmute <name> <Dauer> <Einheit> <Grund>'
+    mute: '§cVerwendung: /mute <name> <Grund>'
+    unmute: '§cVerwendung: /unmute <name>'
+  notification: 'Der Spieler §b%player% §3wurde von §c%fromDN%§3 stummgeschaltet!\n§f[§cABan§f] §3Grund: %reason%§7| §3Dauer: §6%duration%'
+  message: '§cDu wurdest vom Chat ausgeschlossen.\n§cGrund§7: §6%reason%§cDauer§7: §6%duration%'
+  not_yourself: '§cDu kannst dich nicht selbst stumm schalten!'
+  already_muted: '§cDer Spieler §e%player% §cist bereits stummgeschaltet.'
+  not_muted: '§cDer Spieler §e%player% §cist nicht stummgeschaltet.'
+  success:
+    mute: '§aDu hast §e%player%§a erfolgreich stummgeschaltet!'
+    unmute: '§aDu hast §e%player%§a erfolgreich entstummt!'
+
+# Temp/-Ban
+# Placeholders
+#   %player%    | Player name
+#   %from%      | From player name
+#   %fromDN%    | From player display name
+#   %duration%  | Duration
+#   %reason%    | Reason
+ban:
+  help:
+    tempban: '§cVerwendung: /tempban <name> <Dauer> <Einheit> <Grund>'
+    ban: '§cVerwendung: /ban <name> <Grund>'
+    unban: '§cVerwendung: /unban <name>'
+  notification: 'Der Spieler §b%player% §3wurde von §c%fromDN%§3 gebannt!\n§f[§cABan§f] §3Grund: %reason%§7| §3Dauer: §6%duration%'
+  message:
+    kick: '§cDu wurdest gebannt.\n§cGrund§7: §6%reason%'
+    login: '§cDu wurdest gebannt.\n\n§cGrund§7: §6%reason%\n§cDauer§7: §6%duration%'
+    ipban: '§cDu wurdest gebannt.\n\n§cGrund§7: §6Mit anderem Account gebannt\n§cDauer§7: §4DAUERHAFT'
+  not_yourself: '§cDu kannst dich nicht selbst bannen!'
+  already_banned: '§cDer Spieler §e%player% §cist bereits gebannt.'
+  not_banned: '§cDer Spieler §e%player% §cist nicht gebannt.'
+  success:
+    ban: '§aDu hast §e%player%§a erfolgreich gebannt!'
+    unban: '§aDu hast §e%player%§a erfolgreich entbannt!'
+
+# Check
+# Placeholders
+#   %player%    | Player name
+#   %uuid%      | Player uuid
+#   %ip%        | Player ip address
+#   %server%    | Server
+#   %banned%    | Is banned
+#   %muted%     | Is muted
+check:
+  help: '§cVerwendung: /check <name>'
+  prefix:
+    true: '§c'
+    false: '§a'
+  title: 'Spielerdaten über §e%player%'
+  uuid: 'UUID: §b%uuid%'
+  ip: 'Socket Adresse: §b%ip%'
+  server: 'Server: §b%server%'
+  banned: 'Gebannt: %banned%'
+  muted: 'Stummgeschaltet: %muted%'

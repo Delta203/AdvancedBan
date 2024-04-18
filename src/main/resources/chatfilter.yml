@@ -1,0 +1,89 @@
+# Advanced Ban
+# Plugin by Delta203
+# v1.3 BungeeCord & Spigot
+
+domains:
+  - 'at'
+  - 'biz'
+  - 'cc'
+  - 'ch'
+  - 'co.at'
+  - 'co.uk'
+  - 'com'
+  - 'de'
+  - 'eu'
+  - 'gs'
+  - 'info'
+  - 'li'
+  - 'me'
+  - 'me.uk'
+  - 'mobi'
+  - 'name'
+  - 'net'
+  - 'nl'
+  - 'or.at'
+  - 'org'
+  - 'org.uk'
+  - 'tk'
+  - 'to'
+  - 'tv'
+
+# List of insults (Default: EN, DE)
+# https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words
+insults:
+  - 'anal'
+  - 'ass'
+  - 'bastard'
+  - 'bimbo'
+  - 'bitch'
+  - 'cock'
+  - 'cunt'
+  - 'faggot'
+  - 'fuck'
+  - 'milf'
+  - 'negro'
+  - 'neonazi'
+  - 'nigga'
+  - 'nigger'
+  - 'nutten'
+  - 'penis'
+  - 'pussy'
+  - 'rape'
+  - 'raping'
+  - 'rapist'
+  - 'shit'
+  - 'slut'
+  - 'suck'
+  - 'twat'
+  - 'whore'
+  - 'analritter'
+  - 'arsch'
+  - 'arschficker'
+  - 'arschlecker'
+  - 'arschloch'
+  - 'fick'
+  - 'ficken'
+  - 'fotze'
+  - 'hackfresse'
+  - 'hure'
+  - 'hurensohn'
+  - 'kanake'
+  - 'neger'
+  - 'nutte'
+  - 'pimmel'
+  - 'pisser'
+  - 'schlampe'
+  - 'scheiße'
+  - 'scheisse'
+  - 'schwanzlutscher'
+  - 'schwuchtel'
+  - 'wichser'
+
+# Python wordlist to YAML list:
+#   import io
+#   a = []
+#   for x in io.open("insults.txt", mode="r", encoding="utf-8"):
+#     x = x.strip("\n").lower()
+#     if x not in a:
+#       a.append(x)
+#       print("  - '" + x + "'")
