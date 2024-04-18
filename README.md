@@ -1,4 +1,4 @@
-# AdvancedBan
+# Advanced Ban
 Comprehensive ban, mute and report system with web panel.
 
 ## Requirements:
